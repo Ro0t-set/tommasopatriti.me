@@ -138,16 +138,11 @@ main, .top-nav, .footer {
 }
 
 .nav-logo {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 400;
-    font-size: 1.5rem;
-    color: var(--text-primary);
-    cursor: default;
-    user-select: none;
-    transition: color var(--transition);
+    display: block;
+    width: 52px;
+    height: auto;
+    object-fit: contain;
 }
-a:hover .nav-logo { color: var(--accent); }
 .nav-right { display: flex; align-items: center; gap: var(--space-md); }
 
 .theme-toggle {
