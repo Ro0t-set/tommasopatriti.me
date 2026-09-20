@@ -470,20 +470,20 @@ a.service-card:hover .service-icon { transform: translateY(-2px) rotate(-6deg); 
 .agent-toggle {
     position: fixed;
     left: 50%;
-    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
     transform: translateX(-50%);
     z-index: 160;
     display: inline-flex;
     align-items: center;
-    gap: 2px;
-    padding: 3px;
+    gap: 1px;
+    padding: 2px;
     background: rgba(20, 20, 20, 0.85);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 999px;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-    font: 12px/1 var(--font-mono);
+    font: 10px/1 var(--font-mono);
     letter-spacing: 0;
 }
 .agent-toggle[hidden],
@@ -493,9 +493,9 @@ a.service-card:hover .service-icon { transform: translateY(-2px) rotate(-6deg); 
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    height: 26px;
-    padding: 0 12px;
+    gap: 4px;
+    height: 22px;
+    padding: 0 9px;
     font: inherit;
     color: rgba(255, 255, 255, 0.55);
     background: transparent;
@@ -514,9 +514,9 @@ a.service-card:hover .service-icon { transform: translateY(-2px) rotate(-6deg); 
     outline-offset: 3px;
 }
 .agent-toggle-dot {
-    width: 6px;
-    height: 6px;
-    flex: 0 0 6px;
+    width: 4px;
+    height: 4px;
+    flex: 0 0 4px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.25);
     transition: background 150ms ease;
@@ -558,7 +558,7 @@ main.machine-view pre {
     overflow-wrap: anywhere;
 }
 @media (pointer: coarse) {
-    .agent-toggle-btn { height: 38px; }
+    .agent-toggle-btn { height: 28px; }
 }
 
 /* ==========================================================================
