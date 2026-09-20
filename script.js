@@ -199,6 +199,65 @@
     }
 
     // ==========================================================================
+    // Human / Machine Toggle
+    // ==========================================================================
+
+    function initAgentToggle() {
+        const buttons = Array.from(document.querySelectorAll('[data-agent-view]'));
+        const toggle = document.querySelector('.agent-toggle');
+        const humanView = document.getElementById('human-view');
+        const machineView = document.getElementById('machine-view');
+        if (!buttons.length || !toggle || !humanView || !machineView) return;
+
+        let currentView = 'human';
+        const scrollPositions = { human: window.scrollY, machine: 0 };
+
+        function setAgentView(view, updateUrl = true) {
+            scrollPositions[currentView] = window.scrollY;
+            currentView = view;
+            const isMachine = view === 'machine';
+            humanView.hidden = isMachine;
+            machineView.hidden = !isMachine;
+            document.body.classList.toggle('machine-mode', isMachine);
+
+            buttons.forEach(button => {
+                const isActive = button.dataset.agentView === view;
+                button.setAttribute('aria-checked', String(isActive));
+                button.tabIndex = isActive ? 0 : -1;
+            });
+
+            if (updateUrl) {
+                const url = new URL(window.location.href);
+                if (isMachine) url.searchParams.set('view', 'machine');
+                else url.searchParams.delete('view');
+                window.history.replaceState(window.history.state, '', url);
+            }
+            window.scrollTo({ top: scrollPositions[view], behavior: 'instant' });
+            window.dispatchEvent(new Event('scroll'));
+        }
+
+        buttons.forEach((button, index) => {
+            button.addEventListener('click', () => setAgentView(button.dataset.agentView));
+            button.addEventListener('keydown', event => {
+                let next;
+                if (['ArrowRight', 'ArrowDown'].includes(event.key)) next = (index + 1) % buttons.length;
+                else if (['ArrowLeft', 'ArrowUp'].includes(event.key)) next = (index - 1 + buttons.length) % buttons.length;
+                else if (event.key === 'Home') next = 0;
+                else if (event.key === 'End') next = buttons.length - 1;
+                else return;
+                event.preventDefault();
+                setAgentView(buttons[next].dataset.agentView);
+                buttons[next].focus({ preventScroll: true });
+            });
+        });
+
+        if (new URLSearchParams(window.location.search).get('view') === 'machine') {
+            setAgentView('machine', false);
+        }
+        toggle.hidden = false;
+    }
+
+    // ==========================================================================
     // Interactive Terminal Animation
     // ==========================================================================
 
@@ -381,6 +440,11 @@
         }, { passive: true });
 
         function loop() {
+            // Hidden sections have no geometry to use for cinematic transforms.
+            if (document.body.classList.contains('machine-mode')) {
+                ticking = false;
+                return;
+            }
             smooth += (target - smooth) * 0.12;
             if (Math.abs(target - smooth) < 0.05) smooth = target;
 
@@ -490,6 +554,7 @@
         initTheme();
         initLanguage();
         initModals();
+        initAgentToggle();
         initTerminal();
         initScrollReveal();
         initNavScroll();

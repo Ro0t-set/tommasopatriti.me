@@ -464,6 +464,104 @@ a.service-card:hover .service-icon { transform: translateY(-2px) rotate(-6deg); 
 .service-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.55; }
 
 /* ==========================================================================
+   Human / Machine
+   ========================================================================== */
+
+.agent-toggle {
+    position: fixed;
+    left: 50%;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    transform: translateX(-50%);
+    z-index: 160;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 3px;
+    background: rgba(20, 20, 20, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    font: 12px/1 var(--font-mono);
+    letter-spacing: 0;
+}
+.agent-toggle[hidden],
+#human-view[hidden],
+#machine-view[hidden] { display: none; }
+.agent-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 26px;
+    padding: 0 12px;
+    font: inherit;
+    color: rgba(255, 255, 255, 0.55);
+    background: transparent;
+    border: 0;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: color 150ms ease, background 150ms ease;
+}
+.agent-toggle-btn:hover { color: rgba(255, 255, 255, 0.9); }
+.agent-toggle-btn[aria-checked="true"] {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+}
+.agent-toggle-btn:focus-visible {
+    outline: 2px solid #ff5e1f;
+    outline-offset: 3px;
+}
+.agent-toggle-dot {
+    width: 6px;
+    height: 6px;
+    flex: 0 0 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    transition: background 150ms ease;
+}
+.agent-toggle-btn[aria-checked="true"] .agent-toggle-dot { background: #ff5e1f; }
+body:has(.cookie-consent) .agent-toggle,
+body:has(.modal.active) .agent-toggle { visibility: hidden; }
+
+body.machine-mode {
+    min-height: 100svh;
+    background: #0a0a0a;
+    color: #e6e6e6;
+    transition: none;
+}
+body.machine-mode::before,
+body.machine-mode > .top-nav,
+body.machine-mode > .scene-dots,
+body.machine-mode > .scroll-progress,
+body.machine-mode > .footer,
+body.machine-mode > .whatsapp-float { display: none; }
+main.machine-view {
+    width: 100%;
+    max-width: 760px;
+    min-height: 100svh;
+    margin: 0 auto;
+    padding: 72px 24px 120px;
+    color: #e6e6e6;
+}
+main.machine-view h1 {
+    margin: 0 0 32px;
+    color: #888;
+    font: 400 14px/1.15 var(--font-main);
+}
+main.machine-view pre {
+    margin: 0;
+    font: 400 13px/1.7 var(--font-mono);
+    letter-spacing: 0;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+@media (pointer: coarse) {
+    .agent-toggle-btn { height: 38px; }
+}
+
+/* ==========================================================================
    Timeline
    ========================================================================== */
 
