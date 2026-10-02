@@ -8,7 +8,7 @@
         consentKey: 'portfolio-cookie-consent',
         gaMeasurementId: 'G-8JSLCWYJYF',
         posthogToken: 'phc_xNhdREzHSmUE7d24JUju85GWxKw4iyjEPR8L2MpgajFT',
-        posthogApiHost: 'https://t.tommasopatriti.me',
+        posthogApiHost: 'https://eu.i.posthog.com',
         posthogUiHost: 'https://eu.posthog.com',
         posthogDefaults: '2026-05-30'
     };
@@ -97,8 +97,22 @@
         loadScript(gaSrc).catch(() => {});
     }
 
+    function syncPostHogConsent(posthog) {
+        if (getConsent() === 'accepted') {
+            if (posthog.has_opted_out_capturing()) {
+                posthog.opt_in_capturing({ captureEventName: false });
+            }
+        } else {
+            posthog.opt_out_capturing();
+        }
+    }
+
     function initPostHog() {
         if (window.posthog && window.posthog.__loaded) {
+            syncPostHogConsent(window.posthog);
+            return;
+        }
+        if (window.posthog && window.posthog.__SV) {
             return;
         }
 
@@ -133,12 +147,18 @@
             api_host: CONFIG.posthogApiHost,
             ui_host: CONFIG.posthogUiHost,
             defaults: CONFIG.posthogDefaults,
-            person_profiles: 'identified_only'
+            person_profiles: 'identified_only',
+            opt_out_capturing_by_default: true,
+            loaded: syncPostHogConsent
         });
     }
 
     function initAnalytics() {
+        window[`ga-disable-${CONFIG.gaMeasurementId}`] = false;
+
         if (analyticsInitialized) {
+            window.gtag('consent', 'update', { analytics_storage: 'granted' });
+            initPostHog();
             return;
         }
 
@@ -162,6 +182,14 @@
     }
 
     function clearAnalyticsStorage() {
+        window[`ga-disable-${CONFIG.gaMeasurementId}`] = true;
+        if (window.gtag) {
+            window.gtag('consent', 'update', { analytics_storage: 'denied' });
+        }
+        if (window.posthog && window.posthog.__loaded && typeof window.posthog.opt_out_capturing === 'function') {
+            window.posthog.opt_out_capturing();
+        }
+
         document.cookie.split(';').forEach(cookie => {
             const name = cookie.split('=')[0].trim();
             if (name === '_ga' || name === '_gid' || name === '_gat' || name.startsWith('_ga_') || name.startsWith('ph_')) {
@@ -176,10 +204,6 @@
                     storage.removeItem(key);
                 }
             });
-        }
-
-        if (window.posthog && typeof window.posthog.opt_out_capturing === 'function') {
-            window.posthog.opt_out_capturing();
         }
     }
 
