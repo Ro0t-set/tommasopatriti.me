@@ -1407,6 +1407,31 @@ main.machine-view pre {
 .showcase-tile h3 { font: 400 1.25rem/1.2 var(--font-serif); align-self: end; }
 .showcase-tile p { font-size: 0.8rem; line-height: 1.5; color: var(--text-secondary); }
 .showcase-tile:hover h3 { color: var(--accent); }
+.showcase-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-sm);
+    margin: var(--space-lg) auto 0;
+}
+.showcase-control {
+    min-width: 72px;
+    height: 72px;
+    padding: 0 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg-card);
+    color: var(--accent);
+    font: 400 1.05rem/1 var(--font-main);
+    cursor: pointer;
+    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+.showcase-control:hover { border-color: var(--accent); background: var(--bg-primary); }
+.showcase-control:active { transform: scale(0.97); }
+.showcase-control-arrow { display: grid; place-items: center; padding: 0; }
+.showcase-control-arrow svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.showcase-control-toggle { min-width: 156px; color: var(--text-primary); }
+.showcase-control-toggle[aria-pressed="true"] { color: var(--accent); }
 .freelance-card[id] { scroll-margin-top: 110px; }
 @media (max-width: 768px) {
     .showcase-track { padding-inline: var(--space-sm); }
