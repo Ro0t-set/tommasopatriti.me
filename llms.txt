@@ -53,6 +53,7 @@
 
 ## Progetti freelance rappresentativi
 
+- **Dalmonte Immobiliare (2026)** — Gestionale su misura per l’organizzazione del lavoro e la gestione delle attività dell’agenzia
 - **AicsForm (2026)** — SaaS multi-tenant per associazioni con iscrizioni, rinnovi, gestione soci, documenti, pagamenti Stripe Connect, siti web e pass QR (Nuxt, Vue, Cloudflare Workers, D1, R2) — https://aicsform.it
 - **IDEM Srl (2026)** — Sviluppatore Android (Kotlin, Android SDK, RabbitMQ, Architettura Esagonale, Scrum)
 - **Presa B+ (2026)** — Sito web per palestra boulder con gestione contenuti, iscrizioni, tesseramenti AICS, area amministrativa e pagamenti online

@@ -98,6 +98,13 @@ const CV_DATA = {
             items: [
                 {
                     date: "2026",
+                    title: { it: "Gestionale immobiliare", en: "Real estate management platform" },
+                    client: "Dalmonte Immobiliare",
+                    description: { it: "Sviluppo di un gestionale su misura per Dalmonte Immobiliare, pensato per semplificare l’organizzazione del lavoro e la gestione delle attività dell’agenzia.", en: "Development of a custom management platform for Dalmonte Immobiliare, designed to simplify work organisation and the agency’s daily operations." },
+                    logo: "assets/logos/dalmonte.png"
+                },
+                {
+                    date: "2026",
                     title: { it: "SaaS per la gestione delle associazioni", en: "SaaS for association management" },
                     client: "AicsForm",
                     description: { it: "Piattaforma SaaS multi-tenant per associazioni: iscrizioni e rinnovi, gestione soci, consensi e documenti, pagamenti con Stripe Connect, siti web delle associazioni e pass QR.", en: "Multi-tenant SaaS platform for associations: registrations and renewals, member management, consents and documents, Stripe Connect payments, association websites and QR passes." },
