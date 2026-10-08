@@ -97,6 +97,14 @@ const CV_DATA = {
             type: "projects",
             items: [
                 {
+                    date: "2026",
+                    title: { it: "SaaS per la gestione delle associazioni", en: "SaaS for association management" },
+                    client: "AicsForm",
+                    description: { it: "Piattaforma SaaS multi-tenant per associazioni: iscrizioni e rinnovi, gestione soci, consensi e documenti, pagamenti con Stripe Connect, siti web delle associazioni e pass QR. Sviluppata con Nuxt e Vue su Cloudflare Workers, D1 e R2, con accesso passwordless e import/export per i flussi AICS.", en: "Multi-tenant SaaS platform for associations: registrations and renewals, member management, consents and documents, Stripe Connect payments, association websites and QR passes. Built with Nuxt and Vue on Cloudflare Workers, D1 and R2, with passwordless access and import/export for AICS workflows." },
+                    tech: ["Nuxt 4", "Vue 3", "TypeScript", "Cloudflare Workers", "D1", "R2", "Stripe Connect", "Drizzle ORM"],
+                    logo: "assets/logos/aicsform.svg"
+                },
+                {
                     date: { it: "Apr 2026 — Presente", en: "Apr 2026 — Present" },
                     title: { it: "Sviluppatore Android", en: "Android Developer" },
                     client: "IDEM Srl",
