@@ -543,8 +543,6 @@
         const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
         const friction = reduced.matches ? 0.008 : 0.0035;
         const autoSpeed = 28;
-        const pauseButton = section.querySelector('[data-carousel-toggle]');
-        const directionButtons = section.querySelectorAll('[data-carousel-direction]');
         let drag = null;
         let momentumFrame = 0;
         let autoFrame = 0;
@@ -555,7 +553,6 @@
         let resumeTimer;
         let suppressClick = false;
         let clearSuppressionTimer;
-        let autoPaused = false;
 
         function makeClone(tile) {
             const clone = tile.cloneNode(true);
@@ -631,7 +628,7 @@
         }
 
         function startAuto() {
-            if (autoFrame || autoPaused) return;
+            if (autoFrame) return;
 
             function step(time) {
                 const elapsed = autoLastTime ? Math.min(time - autoLastTime, 50) : 0;
@@ -646,31 +643,8 @@
 
         function resumeAuto(delay = 1000) {
             clearTimeout(resumeTimer);
-            if (autoPaused) return;
             resumeTimer = setTimeout(startAuto, delay);
         }
-
-        pauseButton?.addEventListener('click', () => {
-            autoPaused = !autoPaused;
-            pauseButton.setAttribute('aria-pressed', String(autoPaused));
-            pauseButton.textContent = autoPaused ? 'Riprendi' : 'Pausa';
-            if (autoPaused) {
-                stopAuto();
-                stopMomentum();
-            } else {
-                startAuto();
-            }
-        });
-
-        directionButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                stopAuto();
-                stopMomentum();
-                const direction = Number(button.dataset.carouselDirection) || 1;
-                viewport.scrollBy({ left: direction * viewport.clientWidth * 0.72, behavior: 'smooth' });
-                resumeAuto(1800);
-            });
-        });
 
         function coast(velocity) {
             if (Math.abs(velocity) < 0.025) {
