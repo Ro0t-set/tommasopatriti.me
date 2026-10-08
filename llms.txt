@@ -55,7 +55,7 @@
 
 - **AicsForm (2026)** — SaaS multi-tenant per associazioni con iscrizioni, rinnovi, gestione soci, documenti, pagamenti Stripe Connect, siti web e pass QR (Nuxt, Vue, Cloudflare Workers, D1, R2) — https://aicsform.it
 - **IDEM Srl (2026)** — Sviluppatore Android (Kotlin, Android SDK, RabbitMQ, Architettura Esagonale, Scrum)
-- **Presa B+ (2026)** — Sito Astro content-driven per palestra boulder a Bologna con CMS, modulo iscrizione AICS e pagamenti online tramite SumUp
+- **Presa B+ (2026)** — Sito web per palestra boulder con gestione contenuti, iscrizioni, tesseramenti AICS, area amministrativa e pagamenti online
 - **Nowhere Solutions & Web (2025–2026)** — Client web Angular production-ready
 - **AgriMercati (2025)** — Piattaforma di aggregazione prezzi commodity agricole italiane, OCR AI-based, app mobile multipiattaforma, assistente LLM
 - **Elaria (2025)** — Microservizi Spring Boot + Docker Swarm + Traefik + Keycloak
