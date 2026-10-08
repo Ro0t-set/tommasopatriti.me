@@ -1377,6 +1377,7 @@ main.machine-view pre {
     overscroll-behavior-x: contain;
     scroll-behavior: auto;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
     cursor: grab;
 }
 .showcase-viewport.is-dragging { cursor: grabbing; user-select: none; }

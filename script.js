@@ -542,12 +542,14 @@
         const originalTiles = Array.from(track.children);
         const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
         const friction = reduced.matches ? 0.008 : 0.0035;
-        const autoSpeed = reduced.matches ? 8 : 28;
+        const autoSpeed = 28;
         let drag = null;
         let momentumFrame = 0;
         let autoFrame = 0;
         let autoLastTime = 0;
         let loopPeriod = 0;
+        let touchActive = false;
+        let touchNormalizeTimer;
         let resumeTimer;
         let suppressClick = false;
         let clearSuppressionTimer;
@@ -568,10 +570,12 @@
 
         const beforeClones = document.createDocumentFragment();
         const afterClones = document.createDocumentFragment();
-        originalTiles.forEach(tile => {
-            beforeClones.append(makeClone(tile));
-            afterClones.append(makeClone(tile));
-        });
+        for (let copy = 0; copy < 2; copy++) {
+            originalTiles.forEach(tile => {
+                beforeClones.append(makeClone(tile));
+                afterClones.append(makeClone(tile));
+            });
+        }
         track.insertBefore(beforeClones, originalTiles[0]);
         track.append(afterClones);
 
@@ -585,8 +589,8 @@
             if (!loopPeriod) return 0;
             const before = viewport.scrollLeft;
             let normalized = before;
-            const lowerBound = loopPeriod * 0.5;
-            const upperBound = loopPeriod * 1.5;
+            const lowerBound = loopPeriod * 1.5;
+            const upperBound = loopPeriod * 2.5;
             while (normalized < lowerBound) normalized += loopPeriod;
             while (normalized > upperBound) normalized -= loopPeriod;
             if (normalized !== before) viewport.scrollLeft = normalized;
@@ -594,12 +598,22 @@
         }
 
         measureLoopPeriod();
-        viewport.scrollLeft = loopPeriod;
+        viewport.scrollLeft = loopPeriod * 2;
         window.addEventListener('resize', () => {
             measureLoopPeriod();
             normalizeLoop();
         });
-        viewport.addEventListener('scroll', normalizeLoop, { passive: true });
+        function scheduleTouchNormalize() {
+            clearTimeout(touchNormalizeTimer);
+            touchNormalizeTimer = setTimeout(() => {
+                if (!touchActive) normalizeLoop();
+            }, 260);
+        }
+
+        viewport.addEventListener('scroll', () => {
+            if (touchActive) scheduleTouchNormalize();
+            else normalizeLoop();
+        }, { passive: true });
 
         function stopMomentum() {
             if (momentumFrame) cancelAnimationFrame(momentumFrame);
@@ -659,7 +673,13 @@
         viewport.addEventListener('pointerdown', event => {
             stopAuto();
             stopMomentum();
-            if (event.pointerType === 'touch' || event.button !== 0) return;
+            if (event.pointerType === 'touch') {
+                clearTimeout(touchNormalizeTimer);
+                normalizeLoop();
+                touchActive = true;
+                return;
+            }
+            if (event.button !== 0) return;
             drag = {
                 pointerId: event.pointerId,
                 startX: event.clientX,
@@ -714,9 +734,17 @@
         }
 
         viewport.addEventListener('pointerup', event => {
+            if (event.pointerType === 'touch') {
+                touchActive = false;
+                scheduleTouchNormalize();
+            }
             if (!finishDrag(event, true)) resumeAuto(event.pointerType === 'touch' ? 2600 : 1400);
         });
         viewport.addEventListener('pointercancel', event => {
+            if (event.pointerType === 'touch') {
+                touchActive = false;
+                scheduleTouchNormalize();
+            }
             if (!finishDrag(event, false)) resumeAuto(event.pointerType === 'touch' ? 2600 : 1400);
         });
         viewport.addEventListener('lostpointercapture', event => {
