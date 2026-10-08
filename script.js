@@ -530,6 +530,228 @@
     }
 
     // ==========================================================================
+    // Project strip: automatic movement with native and pointer-driven scrolling.
+    // ==========================================================================
+
+    function initProjectCarousel() {
+        const section = document.querySelector('[data-project-carousel]');
+        if (!section) return;
+
+        const viewport = section.querySelector('.showcase-viewport');
+        const track = viewport.querySelector('.showcase-track');
+        const originalTiles = Array.from(track.children);
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const friction = reduced.matches ? 0.008 : 0.0035;
+        const autoSpeed = reduced.matches ? 8 : 28;
+        let drag = null;
+        let momentumFrame = 0;
+        let autoFrame = 0;
+        let autoLastTime = 0;
+        let loopPeriod = 0;
+        let resumeTimer;
+        let suppressClick = false;
+        let clearSuppressionTimer;
+
+        function makeClone(tile) {
+            const clone = tile.cloneNode(true);
+            clone.setAttribute('aria-hidden', 'true');
+            clone.tabIndex = -1;
+            clone.draggable = false;
+            clone.querySelectorAll('a, button, [tabindex]').forEach(element => {
+                element.tabIndex = -1;
+            });
+            clone.querySelectorAll('a, img').forEach(element => {
+                element.draggable = false;
+            });
+            return clone;
+        }
+
+        const beforeClones = document.createDocumentFragment();
+        const afterClones = document.createDocumentFragment();
+        originalTiles.forEach(tile => {
+            beforeClones.append(makeClone(tile));
+            afterClones.append(makeClone(tile));
+        });
+        track.insertBefore(beforeClones, originalTiles[0]);
+        track.append(afterClones);
+
+        function measureLoopPeriod() {
+            const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+            loopPeriod = originalTiles.reduce((width, tile) => width + tile.getBoundingClientRect().width, 0)
+                + gap * originalTiles.length;
+        }
+
+        function normalizeLoop() {
+            if (!loopPeriod) return 0;
+            const before = viewport.scrollLeft;
+            let normalized = before;
+            const lowerBound = loopPeriod * 0.5;
+            const upperBound = loopPeriod * 1.5;
+            while (normalized < lowerBound) normalized += loopPeriod;
+            while (normalized > upperBound) normalized -= loopPeriod;
+            if (normalized !== before) viewport.scrollLeft = normalized;
+            return normalized - before;
+        }
+
+        measureLoopPeriod();
+        viewport.scrollLeft = loopPeriod;
+        window.addEventListener('resize', () => {
+            measureLoopPeriod();
+            normalizeLoop();
+        });
+        viewport.addEventListener('scroll', normalizeLoop, { passive: true });
+
+        function stopMomentum() {
+            if (momentumFrame) cancelAnimationFrame(momentumFrame);
+            momentumFrame = 0;
+        }
+
+        function stopAuto() {
+            if (autoFrame) cancelAnimationFrame(autoFrame);
+            autoFrame = 0;
+            autoLastTime = 0;
+            clearTimeout(resumeTimer);
+        }
+
+        function startAuto() {
+            if (autoFrame) return;
+
+            function step(time) {
+                const elapsed = autoLastTime ? Math.min(time - autoLastTime, 50) : 0;
+                autoLastTime = time;
+                viewport.scrollLeft += autoSpeed * elapsed / 1000;
+                normalizeLoop();
+                autoFrame = requestAnimationFrame(step);
+            }
+
+            autoFrame = requestAnimationFrame(step);
+        }
+
+        function resumeAuto(delay = 1000) {
+            clearTimeout(resumeTimer);
+            resumeTimer = setTimeout(startAuto, delay);
+        }
+
+        function coast(velocity) {
+            if (Math.abs(velocity) < 0.025) {
+                resumeAuto();
+                return;
+            }
+            let lastTime = 0;
+
+            function step(time) {
+                const elapsed = lastTime ? Math.min(time - lastTime, 40) : 0;
+                lastTime = time;
+                viewport.scrollLeft += velocity * elapsed;
+                normalizeLoop();
+                velocity *= Math.exp(-friction * elapsed);
+                if (Math.abs(velocity) >= 0.025) {
+                    momentumFrame = requestAnimationFrame(step);
+                } else {
+                    momentumFrame = 0;
+                    resumeAuto();
+                }
+            }
+
+            momentumFrame = requestAnimationFrame(step);
+        }
+
+        viewport.addEventListener('pointerdown', event => {
+            stopAuto();
+            stopMomentum();
+            if (event.pointerType === 'touch' || event.button !== 0) return;
+            drag = {
+                pointerId: event.pointerId,
+                startX: event.clientX,
+                startY: event.clientY,
+                startScroll: viewport.scrollLeft,
+                lastX: event.clientX,
+                lastTime: performance.now(),
+                velocity: 0,
+                moved: false
+            };
+        });
+
+        viewport.addEventListener('pointermove', event => {
+            if (!drag || event.pointerId !== drag.pointerId) return;
+            const deltaX = event.clientX - drag.startX;
+            const deltaY = event.clientY - drag.startY;
+            if (!drag.moved && Math.hypot(deltaX, deltaY) < 6) return;
+            if (!drag.moved && Math.abs(deltaY) > Math.abs(deltaX)) {
+                drag = null;
+                return;
+            }
+
+            if (!drag.moved) {
+                drag.moved = true;
+                viewport.setPointerCapture(event.pointerId);
+                viewport.classList.add('is-dragging');
+            }
+
+            event.preventDefault();
+            const now = performance.now();
+            const elapsed = now - drag.lastTime;
+            if (elapsed > 0) drag.velocity = -(event.clientX - drag.lastX) / elapsed;
+            drag.lastX = event.clientX;
+            drag.lastTime = now;
+            viewport.scrollLeft = drag.startScroll - deltaX;
+            drag.startScroll += normalizeLoop();
+        });
+
+        function finishDrag(event, withMomentum) {
+            if (!drag || event.pointerId !== drag.pointerId) return false;
+            const shouldCoast = drag.moved && withMomentum;
+            const velocity = drag.velocity;
+            if (drag.moved) {
+                viewport.classList.remove('is-dragging');
+                suppressClick = true;
+                clearTimeout(clearSuppressionTimer);
+                clearSuppressionTimer = setTimeout(() => { suppressClick = false; }, 350);
+            }
+            drag = null;
+            if (shouldCoast) coast(velocity);
+            return true;
+        }
+
+        viewport.addEventListener('pointerup', event => {
+            if (!finishDrag(event, true)) resumeAuto(event.pointerType === 'touch' ? 2600 : 1400);
+        });
+        viewport.addEventListener('pointercancel', event => {
+            if (!finishDrag(event, false)) resumeAuto(event.pointerType === 'touch' ? 2600 : 1400);
+        });
+        viewport.addEventListener('lostpointercapture', event => {
+            if (drag) finishDrag(event, false);
+        });
+        viewport.addEventListener('wheel', () => {
+            stopAuto();
+            stopMomentum();
+            resumeAuto(1400);
+        }, { passive: true });
+        // Keep links clickable, but prevent the browser's native link ghost
+        // from taking over when a pointer gesture is meant to scroll the strip.
+        viewport.addEventListener('dragstart', event => event.preventDefault());
+        viewport.addEventListener('click', event => {
+            if (!suppressClick) return;
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            suppressClick = false;
+            clearTimeout(clearSuppressionTimer);
+        }, true);
+        viewport.addEventListener('keydown', e => {
+            if (e.target !== viewport || !['ArrowLeft', 'ArrowRight'].includes(e.key)) return;
+            e.preventDefault();
+            stopAuto();
+            viewport.scrollLeft += e.key === 'ArrowRight'
+                ? viewport.clientWidth * 0.75
+                : -viewport.clientWidth * 0.75;
+            normalizeLoop();
+            resumeAuto(1400);
+        });
+
+        startAuto();
+    }
+
+    // ==========================================================================
     // Card spotlight — cursor-following warm glow (home only, fine pointers)
     // ==========================================================================
 
@@ -558,6 +780,7 @@
         initTerminal();
         initScrollReveal();
         initNavScroll();
+        initProjectCarousel();
         initCinematic();
         initSpotlight();
 

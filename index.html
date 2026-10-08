@@ -264,9 +264,9 @@
     <!-- Scene dots -->
     <nav class="scene-dots" aria-label="Indice sezioni">
         <a href="#intro" data-dot="intro" aria-label="Intro"></a>
-        <a href="#about-heading" data-dot="about-heading" aria-label="Chi sono"></a>
+        <a href="#freelance-heading" data-dot="freelance-heading" aria-label="Collaborazioni"></a>
         <a href="#services-heading" data-dot="services-heading" aria-label="Servizi"></a>
-        <a href="#freelance-heading" data-dot="freelance-heading" aria-label="Progetti"></a>
+        <a href="#project-details-heading" data-dot="project-details-heading" aria-label="Progetti nel dettaglio"></a>
         <a href="#experience-heading" data-dot="experience-heading" aria-label="Esperienza"></a>
         <a href="#education-heading" data-dot="education-heading" aria-label="Formazione"></a>
         <a href="#contact-heading" data-dot="contact-heading" aria-label="Contatti"></a>
@@ -301,7 +301,12 @@
                     <span data-it="Disponibile per progetti" data-en="Available for projects">Disponibile per progetti</span>
                 </div>
                 
-                <h1 class="name"><span class="name-line">Tommaso</span><span class="name-line name-accent">Patriti</span></h1>
+                <h1 class="hero-title">
+                    <span class="hero-title-line" data-it="Sviluppo" data-en="Software">Sviluppo</span>
+                    <span class="hero-title-line hero-title-accent" data-it="software" data-en="development">software</span>
+                    <span class="hero-title-line" data-it="Bologna" data-en="Bologna">Bologna</span>
+                </h1>
+                <p class="hero-signature">Tommaso Patriti</p>
                 <p class="tagline" data-it="Software Engineer Freelance - sistemi distribuiti, cloud e AI" data-en="Freelance Software Engineer - distributed systems, cloud and AI">Software Engineer Freelance - sistemi distribuiti, cloud e AI</p>
                 
                 <p class="location">
@@ -358,12 +363,60 @@
         </header>
         </div>
 
-        <!-- About Section -->
-        <section class="section reveal" aria-labelledby="about-heading">
-            <h2 id="about-heading" class="section-title" data-it="Chi sono" data-en="About me">Chi sono</h2>
-            <p class="section-text" data-it="Sono un ingegnere informatico e costruisco prodotti software production-grade tra backend, cloud, mobile e AI. Mi occupo di microservizi, API, data pipeline, autenticazione, osservabilità e automazioni, con un gusto preciso per architetture semplici quando il dominio è complesso." data-en="I am a computer engineer building production-grade software products across backend, cloud, mobile and AI. I work on microservices, APIs, data pipelines, authentication, observability and automation, with a strong preference for simple architectures around complex domains.">
-                Sono un ingegnere informatico e costruisco prodotti software production-grade tra backend, cloud, mobile e AI. Mi occupo di microservizi, API, data pipeline, autenticazione, osservabilità e automazioni, con un gusto preciso per architetture semplici quando il dominio è complesso.
-            </p>
+        <!-- Freelance Projects and Collaborations Overview -->
+        <section class="section project-showcase reveal" aria-labelledby="freelance-heading" data-project-carousel>
+            <div class="showcase-header">
+                <h2 id="freelance-heading" class="section-title" data-it="Collaborazioni" data-en="Collaborations">Collaborazioni</h2>
+            </div>
+            <div class="showcase-viewport" id="project-viewport" tabindex="0" role="region" aria-label="Collaborazioni, scorri per esplorare">
+                <div class="showcase-track">
+                    <a class="showcase-tile" href="#project-dalmonte">
+                        <span class="showcase-logo"><img src="assets/logos/dalmonte.png" alt="" width="80" height="60" loading="lazy"></span>
+                        <h3 data-it="Dalmonte Immobiliare" data-en="Dalmonte Immobiliare">Dalmonte Immobiliare</h3>
+                        <p data-it="Gestionale su misura per le attività dell’agenzia." data-en="Custom management software for the agency’s daily work.">Gestionale su misura per le attività dell’agenzia.</p>
+                    </a>
+                    <a class="showcase-tile" href="#project-aicsform">
+                        <span class="showcase-logo"><img src="assets/logos/aicsform.svg" alt="" width="80" height="60" loading="lazy"></span>
+                        <h3 data-it="AicsForm" data-en="AicsForm">AicsForm</h3>
+                        <p data-it="Iscrizioni, soci e pagamenti per le associazioni." data-en="Registrations, members and payments for associations.">Iscrizioni, soci e pagamenti per le associazioni.</p>
+                    </a>
+                    <a class="showcase-tile" href="#project-idem">
+                        <span class="showcase-logo"><img src="assets/logos/idem.png" alt="" width="80" height="60" loading="lazy"></span>
+                        <h3 data-it="IDEM Srl" data-en="IDEM Srl">IDEM Srl</h3>
+                        <p data-it="Sviluppo Android in Kotlin e Java." data-en="Android development in Kotlin and Java.">Sviluppo Android in Kotlin e Java.</p>
+                    </a>
+                    <a class="showcase-tile" href="#project-presa-b-piu">
+                        <span class="showcase-logo"><img src="assets/logos/presabpiu.svg" alt="" width="80" height="60" loading="lazy"></span>
+                        <h3 data-it="Presa B+" data-en="Presa B+">Presa B+</h3>
+                        <p data-it="Sito web, tesseramenti e pagamenti online." data-en="Website, memberships and online payments.">Sito web, tesseramenti e pagamenti online.</p>
+                    </a>
+                    <a class="showcase-tile" href="#project-nowhere">
+                        <span class="showcase-logo"><img src="assets/logos/nowhere.png" alt="" width="80" height="60" loading="lazy"></span>
+                        <h3 data-it="Nowhere Solutions &amp; Web" data-en="Nowhere Solutions &amp; Web">Nowhere Solutions &amp; Web</h3>
+                        <p data-it="Client Angular per dashboard e flussi operativi." data-en="Angular clients for dashboards and operational workflows.">Client Angular per dashboard e flussi operativi.</p>
+                    </a>
+                    <a class="showcase-tile" href="#project-agrimercati">
+                        <span class="showcase-logo"><img src="assets/logos/agrimercati.png" alt="" width="80" height="60" loading="lazy"></span>
+                        <h3 data-it="AgriMercati" data-en="AgriMercati">AgriMercati</h3>
+                        <p data-it="Prezzi dei mercati agricoli, dashboard e app mobile." data-en="Agricultural market prices, dashboards and mobile apps.">Prezzi dei mercati agricoli, dashboard e app mobile.</p>
+                    </a>
+                    <a class="showcase-tile" href="#project-elaria">
+                        <span class="showcase-logo"><img src="assets/logos/elaria.png" alt="" width="80" height="60" loading="lazy"></span>
+                        <h3 data-it="Elaria" data-en="Elaria">Elaria</h3>
+                        <p data-it="Microservizi e infrastruttura cloud per un gestionale modulare." data-en="Microservices and cloud infrastructure for modular business software.">Microservizi e infrastruttura cloud per un gestionale modulare.</p>
+                    </a>
+                    <a class="showcase-tile" href="#project-unibo-react">
+                        <span class="showcase-logo"><img src="assets/logos/unibo.png" alt="" width="80" height="60" loading="lazy"></span>
+                        <h3 data-it="Università di Bologna" data-en="University of Bologna">Università di Bologna</h3>
+                        <p data-it="Frontend React per la prevenzione dell’abbandono universitario." data-en="React frontend for university dropout prevention.">Frontend React per la prevenzione dell’abbandono universitario.</p>
+                    </a>
+                    <a class="showcase-tile" href="#project-discover">
+                        <span class="showcase-logo"><img src="assets/logos/unibo.png" alt="" width="80" height="60" loading="lazy"></span>
+                        <h3 data-it="Università di Bologna · Discov.er" data-en="University of Bologna · Discov.er">Università di Bologna · Discov.er</h3>
+                        <p data-it="Machine learning e previsioni di dati ambientali." data-en="Machine learning and environmental-data forecasting.">Machine learning e previsioni di dati ambientali.</p>
+                    </a>
+                </div>
+            </div>
         </section>
 
         <!-- Services Section -->
@@ -397,12 +450,13 @@
             </div>
         </section>
 
-        <!-- Freelance Projects Section -->
-        <section class="section reveal" aria-labelledby="freelance-heading">
-            <h2 id="freelance-heading" class="section-title" data-it="Progetti da Freelance" data-en="Freelance Projects">Progetti da Freelance</h2>
+
+        <!-- Individual Project Details -->
+        <section class="section reveal" aria-labelledby="project-details-heading">
+            <h2 id="project-details-heading" class="section-title" data-it="Progetti nel dettaglio" data-en="Projects in detail">Progetti nel dettaglio</h2>
 
             <div class="freelance-grid reveal-stagger">
-                <article class="freelance-card">
+                <article class="freelance-card" id="project-dalmonte">
                     <div class="freelance-header">
                         <div class="freelance-meta">
                             <img class="freelance-logo freelance-logo--wide" src="assets/logos/dalmonte.png" alt="Dalmonte Immobiliare" loading="lazy" width="80" height="40">
@@ -414,7 +468,7 @@
                     <p data-it="Sviluppo di un gestionale su misura per Dalmonte Immobiliare, pensato per semplificare l’organizzazione del lavoro e la gestione delle attività dell’agenzia." data-en="Development of a custom management platform for Dalmonte Immobiliare, designed to simplify work organisation and the agency’s daily operations.">Sviluppo di un gestionale su misura per Dalmonte Immobiliare, pensato per semplificare l’organizzazione del lavoro e la gestione delle attività dell’agenzia.</p>
                 </article>
 
-                <article class="freelance-card">
+                <article class="freelance-card" id="project-aicsform">
                     <div class="freelance-header">
                         <div class="freelance-meta">
                             <img class="freelance-logo" src="assets/logos/aicsform.svg" alt="AicsForm" loading="lazy" width="40" height="40">
@@ -439,7 +493,7 @@
                     </div>
                 </article>
 
-                <article class="freelance-card">
+                <article class="freelance-card" id="project-idem">
                     <div class="freelance-header">
                         <div class="freelance-meta">
                             <img class="freelance-logo" src="assets/logos/idem.png" alt="IDEM Srl" loading="lazy" width="40" height="40">
@@ -462,7 +516,7 @@
                     </div>
                 </article>
 
-                <article class="freelance-card">
+                <article class="freelance-card" id="project-presa-b-piu">
                     <div class="freelance-header">
                         <div class="freelance-meta">
                             <img class="freelance-logo" src="assets/logos/presabpiu.svg" alt="Presa B+" loading="lazy" width="40" height="40">
@@ -491,7 +545,7 @@
                     </div>
                 </article>
 
-                <article class="freelance-card">
+                <article class="freelance-card" id="project-nowhere">
                     <div class="freelance-header">
                         <div class="freelance-meta">
                             <img class="freelance-logo freelance-logo--wide" src="assets/logos/nowhere.png" alt="Nowhere Solutions & Web" loading="lazy" width="80" height="40">
@@ -517,7 +571,7 @@
                     </div>
                 </article>
 
-                <article class="freelance-card">
+                <article class="freelance-card" id="project-agrimercati">
                     <div class="freelance-header">
                         <div class="freelance-meta">
                             <img class="freelance-logo" src="assets/logos/agrimercati.png" alt="AgriMercati" loading="lazy" width="40" height="40">
@@ -546,7 +600,7 @@
                     </div>
                 </article>
 
-                <article class="freelance-card">
+                <article class="freelance-card" id="project-elaria">
                     <div class="freelance-header">
                         <div class="freelance-meta">
                             <img class="freelance-logo" src="assets/logos/elaria.png" alt="Elaria" loading="lazy" width="40" height="40">
@@ -572,7 +626,7 @@
                     </div>
                 </article>
                 
-                <article class="freelance-card">
+                <article class="freelance-card" id="project-unibo-react">
                     <div class="freelance-header">
                         <div class="freelance-meta">
                             <img class="freelance-logo" src="assets/logos/unibo.png" alt="Università di Bologna" loading="lazy" width="40" height="40">
@@ -597,7 +651,7 @@
                     </div>
                 </article>
                 
-                <article class="freelance-card">
+                <article class="freelance-card" id="project-discover">
                     <div class="freelance-header">
                         <div class="freelance-meta">
                             <img class="freelance-logo" src="assets/logos/unibo.png" alt="Università di Bologna" loading="lazy" width="40" height="40">

@@ -273,6 +273,28 @@ main {
     font-style: italic;
     color: var(--accent);
 }
+.hero-title {
+    font-family: var(--font-serif);
+    font-size: clamp(3.2rem, 9vw, 6.2rem);
+    font-weight: 400;
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+.hero-title-line { display: block; }
+.hero-title-accent { font-style: italic; color: var(--accent); }
+.hero-signature {
+    margin-top: var(--space-sm);
+    font-family: var(--font-serif);
+    font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+    font-weight: 400;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+}
+@media (max-width: 768px) {
+    .hero-title { font-size: clamp(2.6rem, 13vw, 4rem); }
+}
 .tagline { font-size: 1.1rem; color: var(--text-secondary); max-width: 46ch; }
 .location {
     display: flex;
@@ -1328,6 +1350,67 @@ main.machine-view pre {
 }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 ::selection { background: var(--accent); color: #fff; }
+
+/* Project overview: a scrolling strip before the individual case studies. */
+.home .section.project-showcase { display: block; }
+.showcase-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
+}
+.home .section.project-showcase .section-title {
+    position: static;
+    margin-bottom: var(--space-sm);
+    will-change: auto;
+}
+.showcase-viewport {
+    width: 100vw;
+    margin-inline: calc((100% - 100vw) / 2);
+    padding-block: var(--space-md);
+    border-block: 1px solid var(--border);
+    background: var(--bg-card);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+    scroll-behavior: auto;
+    -webkit-overflow-scrolling: touch;
+    cursor: grab;
+}
+.showcase-viewport.is-dragging { cursor: grabbing; user-select: none; }
+.showcase-viewport::-webkit-scrollbar { display: none; }
+.showcase-track {
+    display: flex;
+    gap: var(--space-sm);
+    width: max-content;
+    padding-inline: max(var(--space-lg), calc((100vw - 976px) / 2));
+}
+.showcase-tile {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    grid-template-rows: auto 1fr;
+    column-gap: var(--space-sm);
+    row-gap: 0.4rem;
+    flex: 0 0 310px;
+    width: 310px;
+    padding: var(--space-xs) var(--space-sm) var(--space-xs) 0;
+    border-right: 1px solid var(--border);
+    color: var(--text-primary);
+    text-decoration: none;
+    -webkit-user-drag: none;
+}
+.showcase-logo { grid-row: 1 / 3; display: grid; place-items: center; align-self: center; }
+.showcase-logo img { width: 64px; height: 60px; object-fit: contain; -webkit-user-drag: none; }
+.showcase-tile h3 { font: 400 1.25rem/1.2 var(--font-serif); align-self: end; }
+.showcase-tile p { font-size: 0.8rem; line-height: 1.5; color: var(--text-secondary); }
+.showcase-tile:hover h3 { color: var(--accent); }
+.freelance-card[id] { scroll-margin-top: 110px; }
+@media (max-width: 768px) {
+    .showcase-track { padding-inline: var(--space-sm); }
+    .showcase-tile { flex-basis: 285px; width: 285px; }
+}
 
 /* ==========================================================================
    Footer NAP (Name, Address, Phone) — Google Business Profile aligned
