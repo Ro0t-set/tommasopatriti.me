@@ -1,45 +1,12 @@
 /**
  * Tommaso Patriti Portfolio
- * Theme, Language & Modal functionality
+ * Language, modal and visual interactions
  */
 
 (function() {
     'use strict';
 
     const isMobileViewport = () => window.matchMedia('(max-width: 768px), (hover: none) and (pointer: coarse)').matches;
-
-    // ==========================================================================
-    // Theme Toggle
-    // ==========================================================================
-    
-    const THEME_KEY = 'portfolio-theme';
-    
-    function getInitialTheme() {
-        const saved = localStorage.getItem(THEME_KEY);
-        if (saved && ['light', 'dark'].includes(saved)) {
-            return saved;
-        }
-        return 'light';
-    }
-    
-    function setTheme(theme) {
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem(THEME_KEY, theme);
-    }
-    
-    function initTheme() {
-        const initialTheme = getInitialTheme();
-        setTheme(initialTheme);
-        
-        const toggle = document.getElementById('themeToggle');
-        if (toggle) {
-            toggle.addEventListener('click', () => {
-                const current = document.documentElement.getAttribute('data-theme');
-                setTheme(current === 'dark' ? 'light' : 'dark');
-                lucide.createIcons();
-            });
-        }
-    }
 
     // ==========================================================================
     // Language Switcher
@@ -838,7 +805,6 @@
     // ==========================================================================
 
     function init() {
-        initTheme();
         initLanguage();
         initModals();
         initAgentToggle();
