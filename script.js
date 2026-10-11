@@ -258,86 +258,6 @@
     }
 
     // ==========================================================================
-    // Interactive Terminal Animation
-    // ==========================================================================
-
-    const terminalCommands = [
-        {
-            cmd: 'whoami',
-            output: '<span class="info">tommaso.patriti</span> — Software Engineer'
-        },
-        {
-            cmd: 'cat skills.json | jq',
-            output: '<span class="highlight">{</span> microservices, cloud, clean-code <span class="highlight">}</span>'
-        },
-        {
-            cmd: 'docker ps --filter "status=running"',
-            output: '<span class="success">3 services running</span> — API, Auth, Gateway'
-        },
-        {
-            cmd: 'git log --oneline -1',
-            output: '<span class="info">feat:</span> simplify over-engineered architecture'
-        },
-        {
-            cmd: 'kubectl get pods -n production',
-            output: '<span class="success">All pods healthy</span> — 99.9% uptime'
-        }
-    ];
-
-    function initTerminal() {
-        const commandEl = document.getElementById('terminalCommand');
-        const outputEl = document.getElementById('terminalOutput');
-
-        if (!commandEl || !outputEl) return;
-
-        // Continuous typing mutates layout while scrolling. Keep the mobile hero
-        // stable and reserve the animated terminal for larger viewports.
-        if (isMobileViewport()) {
-            commandEl.textContent = terminalCommands[0].cmd;
-            outputEl.innerHTML = terminalCommands[0].output;
-            outputEl.classList.add('visible');
-            return;
-        }
-
-        let currentIndex = 0;
-
-        function typeCommand(text, callback) {
-            let i = 0;
-            commandEl.textContent = '';
-            outputEl.classList.remove('visible');
-            outputEl.innerHTML = '';
-
-            function type() {
-                if (i < text.length) {
-                    commandEl.textContent += text.charAt(i);
-                    i++;
-                    setTimeout(type, 50 + Math.random() * 50);
-                } else {
-                    setTimeout(callback, 400);
-                }
-            }
-            type();
-        }
-
-        function showOutput(html) {
-            outputEl.innerHTML = html;
-            outputEl.classList.add('visible');
-        }
-
-        function runSequence() {
-            const current = terminalCommands[currentIndex];
-
-            typeCommand(current.cmd, () => {
-                showOutput(current.output);
-                currentIndex = (currentIndex + 1) % terminalCommands.length;
-                setTimeout(runSequence, 3000);
-            });
-        }
-
-        setTimeout(runSequence, 1000);
-    }
-
-    // ==========================================================================
     // Scroll Reveal Animations
     // ==========================================================================
 
@@ -391,7 +311,7 @@
 
         // The full scrub engine performs many layout reads and transforms per
         // frame. Mobile gets a lightweight progress update and normal page flow.
-        if (isMobileViewport()) {
+        if (isMobileViewport() || document.body.classList.contains('poster-layout')) {
             let framePending = false;
 
             const updateProgress = () => {
@@ -779,6 +699,123 @@
         startAuto();
     }
 
+    // Two coherent circular waves: contours of their summed displacement.
+    function initHeroInterference() {
+        const canvas = document.querySelector('.hero-waves');
+        if (!canvas) return;
+        const context = canvas.getContext('2d');
+        if (!context) return;
+        const hero = canvas.closest('.hero');
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const step = 8;
+        let width = 0, height = 0, columns = 0, rows = 0;
+        let first, second, field;
+        let phase = 0, frame = 0, lastTime = 0;
+        let visible = false;
+        const crossings = new Float32Array(8);
+
+        function draw() {
+            if (!field) return;
+            for (let i = 0; i < field.length; i++) {
+                field[i] = Math.sin(first[i] - phase) + .88 * Math.sin(second[i] - phase + .7);
+            }
+            context.clearRect(0, 0, width, height);
+            context.strokeStyle = '#ef6b2e';
+            context.lineWidth = 1;
+            // Follow the zero contour of the combined field, so wavefronts
+            // bend and join around the stationary cancellation fringes.
+            for (const level of [0]) {
+                context.globalAlpha = .12;
+                context.beginPath();
+                for (let y = 0; y < rows - 1; y++) {
+                    for (let x = 0; x < columns - 1; x++) {
+                        const i = y * columns + x;
+                        const a = field[i], b = field[i + 1];
+                        const c = field[i + columns + 1], d = field[i + columns];
+                        const mask = (a >= level ? 1 : 0) | (b >= level ? 2 : 0)
+                            | (c >= level ? 4 : 0) | (d >= level ? 8 : 0);
+                        if (mask === 0 || mask === 15) continue;
+                        const left = x * step, top = y * step;
+                        let count = 0;
+                        function cross(x1, y1, x2, y2, v1, v2) {
+                            if ((v1 >= level) === (v2 >= level)) return;
+                            const t = (level - v1) / (v2 - v1);
+                            crossings[count++] = x1 + t * (x2 - x1);
+                            crossings[count++] = y1 + t * (y2 - y1);
+                        }
+                        cross(left, top, left + step, top, a, b);
+                        cross(left + step, top, left + step, top + step, b, c);
+                        cross(left + step, top + step, left, top + step, c, d);
+                        cross(left, top + step, left, top, d, a);
+                        function segment(p, q) {
+                            context.moveTo(crossings[p], crossings[p + 1]);
+                            context.lineTo(crossings[q], crossings[q + 1]);
+                        }
+                        if (count === 4) segment(0, 2);
+                        else if ((a >= level) === ((a + b + c + d) / 4 >= level)) {
+                            segment(0, 2);
+                            segment(4, 6);
+                        } else {
+                            segment(0, 6);
+                            segment(2, 4);
+                        }
+                    }
+                }
+                context.stroke();
+            }
+        }
+
+        function resize() {
+            width = canvas.clientWidth;
+            height = canvas.clientHeight;
+            if (!width || !height) return;
+            const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
+            canvas.width = Math.round(width * ratio);
+            canvas.height = Math.round(height * ratio);
+            context.setTransform(ratio, 0, 0, ratio, 0, 0);
+            columns = Math.ceil(width / step) + 1;
+            rows = Math.ceil(height / step) + 1;
+            first = new Float32Array(columns * rows);
+            second = new Float32Array(columns * rows);
+            field = new Float32Array(columns * rows);
+            const k = 2 * Math.PI / Math.max(68, Math.min(96, width * .085));
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < columns; x++) {
+                    const px = x * step, py = y * step, i = y * columns + x;
+                    first[i] = k * Math.hypot(px + width * .27, py + height * .35);
+                    second[i] = k * Math.hypot(px - width * .6, py + height * .22);
+                }
+            }
+            draw();
+            hero.classList.add('has-interference');
+        }
+
+        function animate(time) {
+            frame = requestAnimationFrame(animate);
+            if (!lastTime) lastTime = time;
+            if (time - lastTime < 1000 / 12) return;
+            phase = (phase + Math.min(time - lastTime, 150) * .00032) % (Math.PI * 2);
+            lastTime = time;
+            draw();
+        }
+        function syncAnimation() {
+            cancelAnimationFrame(frame);
+            frame = 0;
+            lastTime = 0;
+            if (visible && !document.hidden && !reduced.matches) frame = requestAnimationFrame(animate);
+        }
+        new ResizeObserver(resize).observe(canvas);
+        new IntersectionObserver(entries => {
+            visible = entries[0].isIntersecting;
+            syncAnimation();
+        }).observe(hero);
+        reduced.addEventListener('change', syncAnimation);
+        document.addEventListener('visibilitychange', syncAnimation);
+        window.addEventListener('pagehide', () => cancelAnimationFrame(frame));
+        window.addEventListener('pageshow', syncAnimation);
+        resize();
+    }
+
     // ==========================================================================
     // Card spotlight — cursor-following warm glow (home only, fine pointers)
     // ==========================================================================
@@ -805,11 +842,11 @@
         initLanguage();
         initModals();
         initAgentToggle();
-        initTerminal();
         initScrollReveal();
         initNavScroll();
         initProjectCarousel();
         initCinematic();
+        initHeroInterference();
         initSpotlight();
 
         // Initialize Lucide icons

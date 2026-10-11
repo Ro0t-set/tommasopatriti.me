@@ -278,3 +278,14 @@
         width: 100%;
     }
 }
+
+/* Match the site's square print controls. */
+.cv-modal-content > h2 { background: none; -webkit-text-fill-color: currentColor; color: var(--text-primary); }
+.cv-toggle-switch { width: 22px; height: 22px; border-radius: 0; border: 1px solid var(--text-primary); background: var(--bg-card); }
+.cv-toggle-switch::after { content: '✓'; width: 100%; height: 100%; top: 0; left: 0; border-radius: 0; background: none; box-shadow: none; font: 700 18px/20px var(--font-main); text-align: center; color: var(--bg-primary); opacity: 0; }
+.cv-toggle-label input:checked + .cv-toggle-switch::after { transform: none; opacity: 1; }
+.cv-lang-buttons, .cv-lang-btn { border-radius: 0; }
+.cv-lang-buttons { background: var(--bg-card); border: 1px solid var(--text-primary); }
+.cv-lang-btn.active { background: var(--text-primary); color: var(--bg-primary); }
+.cv-modal-actions .btn-generate { background: var(--text-primary); color: var(--bg-primary); border: 1px solid var(--text-primary); }
+.cv-modal-actions .btn-generate:hover { background: #ef6b2e; border-color: #302019; color: #302019; opacity: 1; transform: none; }

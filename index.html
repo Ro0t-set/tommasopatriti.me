@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it" data-theme="dark">
+<html lang="it" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -255,10 +255,10 @@
     }
     </script>
     
-    <link rel="stylesheet" href="styles.css?v=20261008-carousel">
-    <link rel="stylesheet" href="cv-styles.css">
+    <link rel="stylesheet" href="styles.css?v=20261011-interference-1">
+    <link rel="stylesheet" href="cv-styles.css?v=20261011-print-system-2">
 </head>
-<body class="home">
+<body class="home poster-layout">
     <div class="scroll-progress" aria-hidden="true"></div>
 
     <!-- Scene dots -->
@@ -275,7 +275,7 @@
     <!-- Top Navigation -->
     <nav class="top-nav">
         <div class="nav-left">
-            <a href="/" aria-label="Home" style="text-decoration: none;"><img class="nav-logo" src="/assets/logos/logo-tp.png" alt="Tommaso Patriti — Sviluppo software" width="1283" height="1226"></a>
+            <a href="/" aria-label="Home" style="text-decoration: none;"><img class="nav-logo" src="/assets/logos/logo-tp.png" alt="Tommaso Patriti — Sviluppo software" width="1283" height="1226"><span class="nav-wordmark" aria-hidden="true">TOMMASO<br>PATRITI<span>.</span></span></a>
         </div>
         <div class="nav-right">
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -292,27 +292,19 @@
     
     <!-- Main Content -->
     <main id="human-view">
-        <!-- Hero Scene (sticky zoom) -->
+        <!-- Opening hero -->
         <div class="scene-sticky" id="intro">
         <header class="hero">
+            <canvas class="hero-waves" aria-hidden="true"></canvas>
             <div class="hero-content">
-                <div class="status">
-                    <span class="status-dot"></span>
-                    <span data-it="Disponibile per progetti" data-en="Available for projects">Disponibile per progetti</span>
-                </div>
-                
                 <h1 class="hero-title">
                     <span class="hero-title-line" data-it="Sviluppo" data-en="Software">Sviluppo</span>
                     <span class="hero-title-line hero-title-accent" data-it="software" data-en="development">software</span>
                     <span class="hero-title-line" data-it="Bologna" data-en="Bologna">Bologna</span>
                 </h1>
-                <p class="hero-signature">Tommaso Patriti</p>
                 <p class="tagline" data-it="Software Engineer Freelance - sistemi distribuiti, cloud e AI" data-en="Freelance Software Engineer - distributed systems, cloud and AI">Software Engineer Freelance - sistemi distribuiti, cloud e AI</p>
                 
-                <p class="location">
-                    <i data-lucide="map-pin"></i>
-                    Bologna, Italia
-                </p>
+
                 
                 <div class="hero-links">
                     <a href="#contact-heading" class="btn btn-primary">
@@ -329,28 +321,16 @@
                     </button>
                 </div>
 
-                <!-- Interactive Terminal -->
-                <div class="terminal-widget">
-                    <div class="terminal-header">
-                        <div class="terminal-dots">
-                            <span class="dot red"></span>
-                            <span class="dot yellow"></span>
-                            <span class="dot green"></span>
-                        </div>
-                        <span class="terminal-title">tommaso@dev ~ </span>
-                    </div>
-                    <div class="terminal-body">
-                        <div class="terminal-line">
-                            <span class="terminal-prompt">$</span>
-                            <span class="terminal-command" id="terminalCommand"></span>
-                            <span class="terminal-cursor">_</span>
-                        </div>
-                        <div class="terminal-output" id="terminalOutput"></div>
-                    </div>
-                </div>
+
             </div>
 
             <div class="hero-visual">
+                <div class="poster-monogram" aria-hidden="true"><span>TP<span class="poster-period">.</span></span></div>
+                <p class="location">
+                    <i data-lucide="map-pin"></i>
+                    Bologna, Italia
+                </p>
+                <p class="hero-signature">Tommaso Patriti</p>
                 <div class="profile-photo-container">
                     <img src="https://avatars.githubusercontent.com/u/14377433?v=4" alt="Tommaso Patriti" class="profile-photo" loading="eager">
                 </div>
@@ -361,6 +341,7 @@
                 <span class="scroll-hint-text" data-it="scorri" data-en="scroll">scorri</span>
             </div>
         </header>
+
         </div>
 
         <!-- Freelance Projects and Collaborations Overview -->
@@ -460,25 +441,30 @@
                     <div class="freelance-header">
                         <div class="freelance-meta">
                             <img class="freelance-logo freelance-logo--wide" src="assets/logos/dalmonte.png" alt="Dalmonte Immobiliare" loading="lazy" width="80" height="40">
-                            <span class="freelance-year">2026</span>
-                            <span class="freelance-client">Dalmonte Immobiliare</span>
+
+
                         </div>
                     </div>
+                    <div class="freelance-body">
+                        <div class="freelance-caption"><span class="freelance-client">Dalmonte Immobiliare</span><span class="freelance-year">2026</span></div>
                     <h3 data-it="Gestionale immobiliare" data-en="Real estate management platform">Gestionale immobiliare</h3>
                     <p data-it="Sviluppo di un gestionale su misura per Dalmonte Immobiliare, pensato per semplificare l’organizzazione del lavoro e la gestione delle attività dell’agenzia." data-en="Development of a custom management platform for Dalmonte Immobiliare, designed to simplify work organisation and the agency’s daily operations.">Sviluppo di un gestionale su misura per Dalmonte Immobiliare, pensato per semplificare l’organizzazione del lavoro e la gestione delle attività dell’agenzia.</p>
+                    </div>
                 </article>
 
                 <article class="freelance-card" id="project-aicsform">
                     <div class="freelance-header">
                         <div class="freelance-meta">
                             <img class="freelance-logo" src="assets/logos/aicsform.svg" alt="AicsForm" loading="lazy" width="40" height="40">
-                            <span class="freelance-year">2026</span>
-                            <span class="freelance-client">AicsForm</span>
+
+
                         </div>
                         <a href="https://aicsform.it" target="_blank" rel="noopener noreferrer" class="freelance-link" aria-label="Visita AicsForm">
                             <i data-lucide="external-link"></i>
                         </a>
                     </div>
+                    <div class="freelance-body">
+                        <div class="freelance-caption"><span class="freelance-client">AicsForm</span><span class="freelance-year">2026</span></div>
                     <h3 data-it="SaaS per la gestione delle associazioni" data-en="SaaS for association management">SaaS per la gestione delle associazioni</h3>
                     <p data-it="Piattaforma SaaS multi-tenant per associazioni: iscrizioni e rinnovi, gestione soci, consensi e documenti, pagamenti con Stripe Connect, siti web delle associazioni e pass QR." data-en="Multi-tenant SaaS platform for associations: registrations and renewals, member management, consents and documents, Stripe Connect payments, association websites and QR passes.">Piattaforma SaaS multi-tenant per associazioni: iscrizioni e rinnovi, gestione soci, consensi e documenti, pagamenti con Stripe Connect, siti web delle associazioni e pass QR.</p>
                     <div class="freelance-tech">
@@ -491,19 +477,22 @@
                         <span>Stripe Connect</span>
                         <span>Drizzle ORM</span>
                     </div>
+                    </div>
                 </article>
 
                 <article class="freelance-card" id="project-idem">
                     <div class="freelance-header">
                         <div class="freelance-meta">
                             <img class="freelance-logo" src="assets/logos/idem.png" alt="IDEM Srl" loading="lazy" width="40" height="40">
-                            <span class="freelance-year">2026</span>
-                            <span class="freelance-client">IDEM Srl</span>
+
+
                         </div>
                         <a href="https://idem-tech.it/" target="_blank" rel="noopener noreferrer" class="freelance-link" aria-label="Visita IDEM">
                             <i data-lucide="external-link"></i>
                         </a>
                     </div>
+                    <div class="freelance-body">
+                        <div class="freelance-caption"><span class="freelance-client">IDEM Srl</span><span class="freelance-year">2026</span></div>
                     <h3 data-it="Sviluppatore Android" data-en="Android Developer">Sviluppatore Android</h3>
                     <p data-it="Sviluppo Android in Kotlin/Java con integrazione RabbitMQ, architettura esagonale e lavoro in Scrum." data-en="Android development in Kotlin/Java with RabbitMQ integration, hexagonal architecture and Scrum delivery.">Sviluppo Android in Kotlin/Java con integrazione RabbitMQ, architettura esagonale e lavoro in Scrum.</p>
                     <div class="freelance-tech">
@@ -514,19 +503,22 @@
                         <span data-it="Architettura Esagonale" data-en="Hexagonal Architecture">Architettura Esagonale</span>
                         <span>Scrum</span>
                     </div>
+                    </div>
                 </article>
 
                 <article class="freelance-card" id="project-presa-b-piu">
                     <div class="freelance-header">
                         <div class="freelance-meta">
                             <img class="freelance-logo" src="assets/logos/presabpiu.svg" alt="Presa B+" loading="lazy" width="40" height="40">
-                            <span class="freelance-year">2026</span>
-                            <span class="freelance-client" data-it="Presa B+ — Palestra Boulder" data-en="Presa B+ — Bouldering Gym">Presa B+ — Palestra Boulder</span>
+
+
                         </div>
                         <a href="https://presabpiu.it" target="_blank" rel="noopener noreferrer" class="freelance-link" aria-label="Visita Presa B+">
                             <i data-lucide="external-link"></i>
                         </a>
                     </div>
+                    <div class="freelance-body">
+                        <div class="freelance-caption"><span class="freelance-client" data-it="Presa B+ — Palestra Boulder" data-en="Presa B+ — Bouldering Gym">Presa B+ — Palestra Boulder</span><span class="freelance-year">2026</span></div>
                     <h3 data-it="Sito web, tesseramenti AICS e pagamenti online" data-en="Website, AICS memberships and online payments">Sito web, tesseramenti AICS e pagamenti online</h3>
                     <p data-it="Sito web per palestra boulder con gestione dei contenuti, iscrizioni e pagamenti online. Include un’area amministrativa per gestire soci, tesseramenti AICS e pagamenti." data-en="Website for a bouldering gym with content management, registrations and online payments. Includes an admin area to manage members, AICS memberships and payments.">Sito web per palestra boulder con gestione dei contenuti, iscrizioni e pagamenti online. Include un’area amministrativa per gestire soci, tesseramenti AICS e pagamenti.</p>
                     <div class="freelance-tech">
@@ -543,19 +535,22 @@
                         <span>SEO</span>
                         <span>i18n</span>
                     </div>
+                    </div>
                 </article>
 
                 <article class="freelance-card" id="project-nowhere">
                     <div class="freelance-header">
                         <div class="freelance-meta">
                             <img class="freelance-logo freelance-logo--wide" src="assets/logos/nowhere.png" alt="Nowhere Solutions & Web" loading="lazy" width="80" height="40">
-                            <span class="freelance-year">2025 — 2026</span>
-                            <span class="freelance-client">Nowhere Solutions & Web</span>
+
+
                         </div>
                         <a href="https://www.nowhere.it/" target="_blank" rel="noopener noreferrer" class="freelance-link" aria-label="Visita Nowhere">
                             <i data-lucide="external-link"></i>
                         </a>
                     </div>
+                    <div class="freelance-body">
+                        <div class="freelance-caption"><span class="freelance-client">Nowhere Solutions & Web</span><span class="freelance-year">2025 — 2026</span></div>
                     <h3 data-it="Client Web Angular" data-en="Angular Web Client">Client Web Angular</h3>
                     <p data-it="Progettazione e sviluppo di client web Angular production-ready per dashboard operative e flussi utente complessi, con integrazione Keycloak, component library PrimeNG, grafici Chart.js, routing, form reattivi e build Docker/Traefik in ambiente multi-servizio." data-en="Design and development of production-ready Angular web clients for operational dashboards and complex user flows, with Keycloak integration, PrimeNG component library, Chart.js charts, routing, reactive forms and Docker/Traefik builds in a multi-service environment.">Progettazione e sviluppo di client web Angular production-ready per dashboard operative e flussi utente complessi, con integrazione Keycloak, component library PrimeNG, grafici Chart.js, routing, form reattivi e build Docker/Traefik in ambiente multi-servizio.</p>
                     <div class="freelance-tech">
@@ -569,19 +564,22 @@
                         <span>Docker</span>
                         <span>Traefik</span>
                     </div>
+                    </div>
                 </article>
 
                 <article class="freelance-card" id="project-agrimercati">
                     <div class="freelance-header">
                         <div class="freelance-meta">
                             <img class="freelance-logo" src="assets/logos/agrimercati.png" alt="AgriMercati" loading="lazy" width="40" height="40">
-                            <span class="freelance-year">2025</span>
-                            <span class="freelance-client">AgriMercati</span>
+
+
                         </div>
                         <a href="https://agrimercati.it" target="_blank" rel="noopener noreferrer" class="freelance-link" aria-label="Visita AgriMercati">
                             <i data-lucide="external-link"></i>
                         </a>
                     </div>
+                    <div class="freelance-body">
+                        <div class="freelance-caption"><span class="freelance-client">AgriMercati</span><span class="freelance-year">2025</span></div>
                     <h3>AgriMercati</h3>
                     <p data-it="Piattaforma per acquisire, normalizzare e distribuire prezzi delle commodity agricole italiane. Backend FastAPI con API Swagger/OpenAPI, scraping multi-mercato, download e deduplica PDF, parsing algoritmico con pdfplumber/Tesseract, fallback LLM OpenAI/Anthropic/Gemini, validazione automatica, tassonomia prodotti, scheduler APScheduler, dashboard e app mobile iOS/Android." data-en="Platform for acquiring, normalizing and distributing Italian agricultural commodity prices. FastAPI backend with Swagger/OpenAPI APIs, multi-market scraping, PDF download and deduplication, algorithmic parsing with pdfplumber/Tesseract, OpenAI/Anthropic/Gemini LLM fallback, automatic validation, product taxonomy, APScheduler jobs, dashboard and iOS/Android mobile app.">Piattaforma per acquisire, normalizzare e distribuire prezzi delle commodity agricole italiane. Backend FastAPI con API Swagger/OpenAPI, scraping multi-mercato, download e deduplica PDF, parsing algoritmico con pdfplumber/Tesseract, fallback LLM OpenAI/Anthropic/Gemini, validazione automatica, tassonomia prodotti, scheduler APScheduler, dashboard e app mobile iOS/Android.</p>
                     <div class="freelance-tech">
@@ -598,19 +596,22 @@
                         <span>APScheduler</span>
                         <span>Swagger/OpenAPI</span>
                     </div>
+                    </div>
                 </article>
 
                 <article class="freelance-card" id="project-elaria">
                     <div class="freelance-header">
                         <div class="freelance-meta">
                             <img class="freelance-logo" src="assets/logos/elaria.png" alt="Elaria" loading="lazy" width="40" height="40">
-                            <span class="freelance-year">2025</span>
-                            <span class="freelance-client">Elaria</span>
+
+
                         </div>
                         <a href="https://elaria.it" target="_blank" rel="noopener noreferrer" class="freelance-link" aria-label="Visita Elaria">
                             <i data-lucide="external-link"></i>
                         </a>
                     </div>
+                    <div class="freelance-body">
+                        <div class="freelance-caption"><span class="freelance-client">Elaria</span><span class="freelance-year">2025</span></div>
                     <h3>Elaria</h3>
                     <p data-it="Gestione dell'architettura a microservizi e dell'orchestrazione cloud per un gestionale modulare. Deploy Docker Swarm con reverse proxy Traefik, identity provider Keycloak, messaging RabbitMQ, servizi Spring Boot, osservabilità Grafana e procedure operative per ambienti production-like." data-en="Management of microservices architecture and cloud orchestration for a modular management platform. Docker Swarm deployment with Traefik reverse proxy, Keycloak identity provider, RabbitMQ messaging, Spring Boot services, Grafana observability and operational procedures for production-like environments.">Gestione dell'architettura a microservizi e dell'orchestrazione cloud per un gestionale modulare. Deploy Docker Swarm con reverse proxy Traefik, identity provider Keycloak, messaging RabbitMQ, servizi Spring Boot, osservabilità Grafana e procedure operative per ambienti production-like.</p>
                     <div class="freelance-tech">
@@ -624,19 +625,22 @@
                         <span>CI/CD</span>
                         <span>Observability</span>
                     </div>
+                    </div>
                 </article>
                 
                 <article class="freelance-card" id="project-unibo-react">
                     <div class="freelance-header">
                         <div class="freelance-meta">
                             <img class="freelance-logo" src="assets/logos/unibo.png" alt="Università di Bologna" loading="lazy" width="40" height="40">
-                            <span class="freelance-year">2025</span>
-                            <span class="freelance-client" data-it="Università di Bologna" data-en="University of Bologna">Università di Bologna</span>
+
+
                         </div>
                         <a href="https://bandi.unibo.it/s/disi/disi-incarico-di-lavoro-autonomo-di-natura-libero-professionale-partita-iva-della-durata-di-4-mesi-480-ore-collaborazione-per-attivita-di-sviluppo-software-nell-ambito-di-una-piattaforma-per-la-prevenzione-dell-abbandono-universitario-basata-su" target="_blank" rel="noopener noreferrer" class="freelance-link" aria-label="Vedi bando">
                             <i data-lucide="external-link"></i>
                         </a>
                     </div>
+                    <div class="freelance-body">
+                        <div class="freelance-caption"><span class="freelance-client" data-it="Università di Bologna" data-en="University of Bologna">Università di Bologna</span><span class="freelance-year">2025</span></div>
                     <h3>React Frontend</h3>
                     <p data-it="Frontend React per una piattaforma universitaria di prevenzione dell'abbandono basata su analytics predittivi. Implementazione di dashboard, viste dati, componenti riusabili, integrazione API, gestione stato e UX orientata al supporto decisionale." data-en="React frontend for a university dropout-prevention platform based on predictive analytics. Implemented dashboards, data views, reusable components, API integration, state management and decision-support UX.">Frontend React per una piattaforma universitaria di prevenzione dell'abbandono basata su analytics predittivi. Implementazione di dashboard, viste dati, componenti riusabili, integrazione API, gestione stato e UX orientata al supporto decisionale.</p>
                     <div class="freelance-tech">
@@ -649,19 +653,22 @@
                         <span>UX</span>
                         <span>State Management</span>
                     </div>
+                    </div>
                 </article>
                 
                 <article class="freelance-card" id="project-discover">
                     <div class="freelance-header">
                         <div class="freelance-meta">
                             <img class="freelance-logo" src="assets/logos/unibo.png" alt="Università di Bologna" loading="lazy" width="40" height="40">
-                            <span class="freelance-year">2025</span>
-                            <span class="freelance-client" data-it="Università di Bologna" data-en="University of Bologna">Università di Bologna</span>
+
+
                         </div>
                         <a href="https://www.unibo.it/it/ricerca/progetti-e-iniziative/pr-fesr-emilia-romagna-2021-2027/1223/20430/20607" target="_blank" rel="noopener noreferrer" class="freelance-link" aria-label="Vedi progetto">
                             <i data-lucide="external-link"></i>
                         </a>
                     </div>
+                    <div class="freelance-body">
+                        <div class="freelance-caption"><span class="freelance-client" data-it="Università di Bologna" data-en="University of Bologna">Università di Bologna</span><span class="freelance-year">2025</span></div>
                     <h3>Discov.er</h3>
                     <p data-it="Pipeline ML per simulazione e previsione di dati ambientali nel progetto DISCOV.ER. API FastAPI con autenticazione via API key, ingestion schedulata, training/prediction service, storage SQLite/SQLAlchemy, deployment systemd su Debian e stack scientifico Pandas, NumPy, PyTorch/Darts, SciPy e UTide." data-en="ML pipeline for environmental-data simulation and forecasting in the DISCOV.ER project. FastAPI API with API-key authentication, scheduled ingestion, training/prediction services, SQLite/SQLAlchemy storage, systemd deployment on Debian and scientific stack with Pandas, NumPy, PyTorch/Darts, SciPy and UTide.">Pipeline ML per simulazione e previsione di dati ambientali nel progetto DISCOV.ER. API FastAPI con autenticazione via API key, ingestion schedulata, training/prediction service, storage SQLite/SQLAlchemy, deployment systemd su Debian e stack scientifico Pandas, NumPy, PyTorch/Darts, SciPy e UTide.</p>
                     <div class="freelance-tech">
@@ -675,6 +682,7 @@
                         <span>APScheduler</span>
                         <span>systemd</span>
                         <span>API Gateway</span>
+                    </div>
                     </div>
                 </article>
             </div>
@@ -764,8 +772,9 @@
         <section class="section reveal" aria-labelledby="all-services-heading">
             <h2 id="all-services-heading" class="section-title" data-it="Tutti i servizi" data-en="All services">Tutti i servizi</h2>
 
-            <div style="margin-bottom: 2rem;">
-                <h3 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0;" data-it="Frontend Development" data-en="Frontend Development">Frontend Development</h3>
+            <div class="service-directory">
+            <div class="service-category">
+                <h3 class="service-category-title" data-it="Frontend Development" data-en="Frontend Development">Frontend Development</h3>
                 <div class="tech-tags">
                     <a href="/react-development.html" style="text-decoration: none;"><span>React</span></a>
                     <a href="/angular-development.html" style="text-decoration: none;"><span>Angular</span></a>
@@ -774,8 +783,8 @@
                 </div>
             </div>
 
-            <div style="margin-bottom: 2rem;">
-                <h3 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0;" data-it="Backend & Linguaggi" data-en="Backend & Languages">Backend & Linguaggi</h3>
+            <div class="service-category">
+                <h3 class="service-category-title" data-it="Backend & Linguaggi" data-en="Backend & Languages">Backend & Linguaggi</h3>
                 <div class="tech-tags">
                     <a href="/backend-development.html" style="text-decoration: none;"><span data-it="Backend su misura" data-en="Custom Backend">Backend su misura</span></a>
                     <a href="/java-development.html" style="text-decoration: none;"><span>Java / Spring Boot</span></a>
@@ -785,8 +794,8 @@
                 </div>
             </div>
 
-            <div style="margin-bottom: 2rem;">
-                <h3 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0;" data-it="Cloud & Infrastructure" data-en="Cloud & Infrastructure">Cloud & Infrastructure</h3>
+            <div class="service-category">
+                <h3 class="service-category-title" data-it="Cloud & Infrastructure" data-en="Cloud & Infrastructure">Cloud & Infrastructure</h3>
                 <div class="tech-tags">
                     <a href="/cloud-devops.html" style="text-decoration: none;"><span>Cloud & DevOps</span></a>
                     <a href="/digitalocean-cloud.html" style="text-decoration: none;"><span>DigitalOcean</span></a>
@@ -794,13 +803,14 @@
                 </div>
             </div>
 
-            <div style="margin-bottom: 2rem;">
-                <h3 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0;" data-it="API, Sistemi & IoT" data-en="API, Systems & IoT">API, Sistemi & IoT</h3>
+            <div class="service-category">
+                <h3 class="service-category-title" data-it="API, Sistemi & IoT" data-en="API, Systems & IoT">API, Sistemi & IoT</h3>
                 <div class="tech-tags">
                     <a href="/api-rest-development.html" style="text-decoration: none;"><span>API REST</span></a>
                     <a href="/microservizi.html" style="text-decoration: none;"><span data-it="Microservizi" data-en="Microservices">Microservizi</span></a>
                     <a href="/iot-embedded.html" style="text-decoration: none;"><span data-it="IoT & Embedded" data-en="IoT & Embedded">IoT & Embedded</span></a>
                 </div>
+            </div>
             </div>
         </section>
 
@@ -1165,7 +1175,7 @@ sitemap     https://tommasopatriti.me/sitemap.xml
     </div>
 
     <script src="analytics.js"></script>
-<script src="script.js?v=20261008-carousel"></script>
+<script src="script.js?v=20261011-interference-1"></script>
     <script src="cv-data.js"></script>
     <script src="assets/vendor/jspdf.umd.min.js" defer></script>
     <script src="cv-generator.js" defer></script>
