@@ -2041,6 +2041,7 @@ body:not(.home) .section-title { font-size: clamp(1.9rem, 3vw, 2.8rem); }
     inset: 0;
     pointer-events: none;
     background: repeating-radial-gradient(circle at -27% -35%, transparent 0 24px, #ef6b2e0f 25px 26px, transparent 27px 50px);
+    mix-blend-mode: lighten;
 }
 .poster-layout .hero > .hero-waves {
     position: absolute;
@@ -2049,6 +2050,7 @@ body:not(.home) .section-title { font-size: clamp(1.9rem, 3vw, 2.8rem); }
     height: 100%;
     z-index: 2;
     pointer-events: none;
+    mix-blend-mode: lighten;
 }
 .hero.has-interference .hero-content { background: none; }
 .hero.has-interference .poster-monogram::after { display: none; }
