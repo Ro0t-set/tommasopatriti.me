@@ -666,7 +666,7 @@
         startAuto();
     }
 
-    // Two coherent circular waves: contours of their summed displacement.
+    // Same radial interference field and timing as BoloDev's hero-waves.js.
     function initHeroInterference() {
         const canvas = document.querySelector('.hero-waves');
         if (!canvas) return;
@@ -674,113 +674,99 @@
         if (!context) return;
         const hero = canvas.closest('.hero');
         const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-        const step = 8;
-        let width = 0, height = 0, columns = 0, rows = 0;
-        let first, second, field;
+        let width = 0, height = 0;
+        let pixels, sine, cosine, field;
         let phase = 0, frame = 0, lastTime = 0;
-        let visible = false;
-        const crossings = new Float32Array(8);
+        let visible = true;
 
         function draw() {
-            if (!field) return;
-            for (let i = 0; i < field.length; i++) {
-                field[i] = Math.sin(first[i] - phase) + .88 * Math.sin(second[i] - phase + .7);
+            if (!pixels) return;
+            const sinTime = Math.sin(phase), cosTime = Math.cos(phase);
+            for (let i = 0; i < sine.length; i++) {
+                field[i] = sine[i] * cosTime - cosine[i] * sinTime;
             }
-            context.clearRect(0, 0, width, height);
-            context.strokeStyle = '#ef6b2e';
-            context.lineWidth = 1;
-            // Follow the zero contour of the combined field, so wavefronts
-            // bend and join around the stationary cancellation fringes.
-            for (const level of [0]) {
-                context.globalAlpha = .12;
-                context.beginPath();
-                for (let y = 0; y < rows - 1; y++) {
-                    for (let x = 0; x < columns - 1; x++) {
-                        const i = y * columns + x;
-                        const a = field[i], b = field[i + 1];
-                        const c = field[i + columns + 1], d = field[i + columns];
-                        const mask = (a >= level ? 1 : 0) | (b >= level ? 2 : 0)
-                            | (c >= level ? 4 : 0) | (d >= level ? 8 : 0);
-                        if (mask === 0 || mask === 15) continue;
-                        const left = x * step, top = y * step;
-                        let count = 0;
-                        function cross(x1, y1, x2, y2, v1, v2) {
-                            if ((v1 >= level) === (v2 >= level)) return;
-                            const t = (level - v1) / (v2 - v1);
-                            crossings[count++] = x1 + t * (x2 - x1);
-                            crossings[count++] = y1 + t * (y2 - y1);
-                        }
-                        cross(left, top, left + step, top, a, b);
-                        cross(left + step, top, left + step, top + step, b, c);
-                        cross(left + step, top + step, left, top + step, c, d);
-                        cross(left, top + step, left, top, d, a);
-                        function segment(p, q) {
-                            context.moveTo(crossings[p], crossings[p + 1]);
-                            context.lineTo(crossings[q], crossings[q + 1]);
-                        }
-                        if (count === 4) segment(0, 2);
-                        else if ((a >= level) === ((a + b + c + d) / 4 >= level)) {
-                            segment(0, 2);
-                            segment(4, 6);
-                        } else {
-                            segment(0, 6);
-                            segment(2, 4);
-                        }
-                    }
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    const i = y * width + x;
+                    const value = field[i];
+                    const dx = x + 1 < width ? field[i + 1] - value : value - field[i - 1];
+                    const dy = y + 1 < height ? field[i + width] - value : value - field[i - width];
+                    const thickness = Math.max(.001, Math.hypot(dx, dy)) * .5;
+                    // A positive contour keeps cancellation nodes from staying lit.
+                    const line = Math.max(0, 1 - Math.abs(value - .22) / thickness) * .102;
+                    // The lighten blend exposes this orange engraving only on dark ink.
+                    pixels.data[i * 4] = Math.round(48 + (239 - 48) * line);
+                    pixels.data[i * 4 + 1] = Math.round(32 + (107 - 32) * line);
+                    pixels.data[i * 4 + 2] = Math.round(25 + (46 - 25) * line);
                 }
-                context.stroke();
             }
+            context.putImageData(pixels, 0, 0);
         }
 
         function resize() {
-            width = canvas.clientWidth;
-            height = canvas.clientHeight;
-            if (!width || !height) return;
-            const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
-            canvas.width = Math.round(width * ratio);
-            canvas.height = Math.round(height * ratio);
-            context.setTransform(ratio, 0, 0, ratio, 0, 0);
-            columns = Math.ceil(width / step) + 1;
-            rows = Math.ceil(height / step) + 1;
-            first = new Float32Array(columns * rows);
-            second = new Float32Array(columns * rows);
-            field = new Float32Array(columns * rows);
-            const k = 2 * Math.PI / Math.max(68, Math.min(96, width * .085));
-            for (let y = 0; y < rows; y++) {
-                for (let x = 0; x < columns; x++) {
-                    const px = x * step, py = y * step, i = y * columns + x;
-                    first[i] = k * Math.hypot(px + width * .27, py + height * .35);
-                    second[i] = k * Math.hypot(px - width * .6, py + height * .22);
+            const heroWidth = canvas.clientWidth, heroHeight = canvas.clientHeight;
+            if (!heroWidth || !heroHeight) return;
+            const scale = Math.min(.5, 640 / heroWidth, 400 / heroHeight);
+            width = Math.max(2, Math.round(heroWidth * scale));
+            height = Math.max(2, Math.round(heroHeight * scale));
+            canvas.width = width;
+            canvas.height = height;
+            pixels = context.createImageData(width, height);
+            sine = new Float32Array(width * height);
+            cosine = new Float32Array(sine.length);
+            field = new Float32Array(sine.length);
+            const unit = Math.min(heroWidth, heroHeight);
+            const waveNumber = 2 * Math.PI / .14;
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    const px = x / width, py = y / height;
+                    const a = Math.hypot((px + .08) * heroWidth, (py - .08) * heroHeight) / unit;
+                    const b = Math.hypot((px - 1.12) * heroWidth, (py - .82) * heroHeight) / unit;
+                    const i = y * width + x;
+                    const amplitudeA = 1 / Math.sqrt(1 + a * .65);
+                    const amplitudeB = 1 / Math.sqrt(1 + b * .65);
+                    sine[i] = (Math.sin(a * waveNumber) * amplitudeA + Math.sin(b * waveNumber) * amplitudeB) / 2;
+                    cosine[i] = (Math.cos(a * waveNumber) * amplitudeA + Math.cos(b * waveNumber) * amplitudeB) / 2;
+                    pixels.data[i * 4 + 3] = 255;
                 }
             }
             draw();
             hero.classList.add('has-interference');
         }
 
-        function animate(time) {
-            frame = requestAnimationFrame(animate);
-            if (!lastTime) lastTime = time;
-            if (time - lastTime < 1000 / 12) return;
-            phase = (phase + Math.min(time - lastTime, 150) * .00032) % (Math.PI * 2);
-            lastTime = time;
-            draw();
-        }
-        function syncAnimation() {
+        function stop() {
             cancelAnimationFrame(frame);
             frame = 0;
             lastTime = 0;
-            if (visible && !document.hidden && !reduced.matches) frame = requestAnimationFrame(animate);
         }
-        new ResizeObserver(resize).observe(canvas);
+        function animate(time) {
+            if (!lastTime || time - lastTime >= 1000 / 24) {
+                if (lastTime) phase = (phase + Math.min((time - lastTime) / 1000, .1) * .65) % (2 * Math.PI);
+                lastTime = time;
+                draw();
+            }
+            frame = requestAnimationFrame(animate);
+        }
+        function syncAnimation() {
+            stop();
+            if (reduced.matches) {
+                phase = 0;
+                draw();
+            } else if (visible && !document.hidden) {
+                frame = requestAnimationFrame(animate);
+            }
+        }
+        new ResizeObserver(resize).observe(hero);
         new IntersectionObserver(entries => {
             visible = entries[0].isIntersecting;
             syncAnimation();
         }).observe(hero);
         reduced.addEventListener('change', syncAnimation);
         document.addEventListener('visibilitychange', syncAnimation);
-        window.addEventListener('pagehide', () => cancelAnimationFrame(frame));
+        window.addEventListener('pagehide', stop);
         window.addEventListener('pageshow', syncAnimation);
         resize();
+        syncAnimation();
     }
 
     // ==========================================================================
