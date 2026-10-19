@@ -5,8 +5,13 @@
     'use strict';
 
     const CONFIG = {
-        consentKey: 'portfolio-cookie-consent',
+        consentKey: 'portfolio-cookie-consent-v2',
         gaMeasurementId: 'G-8JSLCWYJYF',
+        adsId: 'AW-17681747905',
+        contactConversions: {
+            whatsapp: 'AW-17681747905/rXrwCNa3u6IdEMGfqO9B',
+            phone: 'AW-17681747905/_1nsCNm3u6IdEMGfqO9B'
+        },
         posthogToken: 'phc_xNhdREzHSmUE7d24JUju85GWxKw4iyjEPR8L2MpgajFT',
         posthogApiHost: 'https://eu.i.posthog.com',
         posthogUiHost: 'https://eu.posthog.com',
@@ -25,7 +30,10 @@
 
     function getConsent() {
         const storage = safeLocalStorage();
-        return storage ? storage.getItem(CONFIG.consentKey) : null;
+        if (!storage) return null;
+        // Previous analytics-only consent does not authorize advertising measurement.
+        return storage.getItem(CONFIG.consentKey) ||
+            (storage.getItem('portfolio-cookie-consent') === 'rejected' ? 'rejected' : null);
     }
 
     function setConsent(value) {
@@ -47,14 +55,14 @@
     function copy() {
         return getLang() === 'en' ? {
             title: 'Cookie preferences',
-            body: 'We use technical preferences and, with your consent, Google Analytics and PostHog for analytics and improvements.',
+            body: 'With your consent, we use Google Analytics, Google Ads and PostHog to measure visits and contact clicks, including those from ads. No personalized advertising. You can refuse or change your choice at any time.',
             accept: 'Accept',
             reject: 'Reject',
             privacy: 'Privacy & Cookie Policy',
             saved: 'Preference saved'
         } : {
             title: 'Preferenze cookie',
-            body: 'Usiamo preferenze tecniche e, con il tuo consenso, Google Analytics e PostHog per statistiche e miglioramenti.',
+            body: 'Con il tuo consenso usiamo Google Analytics, Google Ads e PostHog per misurare visite e clic sui contatti, anche dagli annunci. Nessuna pubblicità personalizzata. Puoi rifiutare o modificare la scelta in qualsiasi momento.',
             accept: 'Accetta',
             reject: 'Rifiuta',
             privacy: 'Privacy & Cookie Policy',
@@ -86,15 +94,62 @@
             window.dataLayer.push(arguments);
         };
 
-        window.gtag('consent', 'update', {
-            analytics_storage: 'granted'
+        window.gtag('consent', 'default', {
+            analytics_storage: 'denied', ad_storage: 'denied',
+            ad_user_data: 'denied', ad_personalization: 'denied'
         });
+        updateGoogleConsent(true);
         window.gtag('js', new Date());
         window.gtag('config', CONFIG.gaMeasurementId, {
-            anonymize_ip: true
+            anonymize_ip: true,
+            allow_ad_personalization_signals: false
         });
+        window.gtag('config', CONFIG.adsId, { allow_ad_personalization_signals: false });
 
         loadScript(gaSrc).catch(() => {});
+    }
+
+    function updateGoogleConsent(accepted) {
+        if (!window.gtag) return;
+        const state = accepted ? 'granted' : 'denied';
+        window.gtag('consent', 'update', {
+            analytics_storage: state, ad_storage: state,
+            ad_user_data: state, ad_personalization: 'denied'
+        });
+    }
+
+    function trackContactClick(event) {
+        if (getConsent() !== 'accepted' || !analyticsInitialized || !window.gtag) return;
+        const link = event.target.closest && event.target.closest('a[href]');
+        if (!link) return;
+        const url = new URL(link.href, window.location.href);
+        let method;
+        if (url.protocol === 'tel:' && url.pathname.replace(/\D/g, '') === '393920752599') {
+            method = 'phone';
+        } else if (url.protocol === 'https:' && url.hostname === 'wa.me' && url.pathname === '/393920752599') {
+            method = 'whatsapp';
+        }
+        if (!method) return;
+
+        const conversion = { send_to: CONFIG.contactConversions[method] };
+        // Give the tag time to send before a same-tab phone/app handoff, with a fallback.
+        if (!event.defaultPrevented && event.button === 0 && !event.metaKey && !event.ctrlKey &&
+            !event.shiftKey && !event.altKey && (!link.target || link.target === '_self')) {
+            event.preventDefault();
+            let navigated = false;
+            const navigate = function() {
+                if (navigated) return;
+                navigated = true;
+                window.location.href = link.href;
+            };
+            conversion.event_callback = navigate;
+            conversion.event_timeout = 800;
+            window.setTimeout(navigate, 800);
+        }
+        window.gtag('event', 'contact_click', {
+            send_to: CONFIG.gaMeasurementId, contact_method: method
+        });
+        window.gtag('event', 'conversion', conversion);
     }
 
     function syncPostHogConsent(posthog) {
@@ -157,7 +212,7 @@
         window[`ga-disable-${CONFIG.gaMeasurementId}`] = false;
 
         if (analyticsInitialized) {
-            window.gtag('consent', 'update', { analytics_storage: 'granted' });
+            updateGoogleConsent(true);
             initPostHog();
             return;
         }
@@ -184,7 +239,7 @@
     function clearAnalyticsStorage() {
         window[`ga-disable-${CONFIG.gaMeasurementId}`] = true;
         if (window.gtag) {
-            window.gtag('consent', 'update', { analytics_storage: 'denied' });
+            updateGoogleConsent(false);
         }
         if (window.posthog && window.posthog.__loaded && typeof window.posthog.opt_out_capturing === 'function') {
             window.posthog.opt_out_capturing();
@@ -192,7 +247,7 @@
 
         document.cookie.split(';').forEach(cookie => {
             const name = cookie.split('=')[0].trim();
-            if (name === '_ga' || name === '_gid' || name === '_gat' || name.startsWith('_ga_') || name.startsWith('ph_')) {
+            if (name === '_ga' || name === '_gid' || name === '_gat' || name.startsWith('_ga_') || name.startsWith('_gcl_') || name.startsWith('ph_')) {
                 deleteCookie(name);
             }
         });
@@ -283,6 +338,7 @@
 
     function init() {
         bindPreferenceLinks();
+        document.addEventListener('click', trackContactClick);
 
         if (getConsent() === 'accepted') {
             initAnalytics();
