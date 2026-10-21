@@ -32,7 +32,7 @@ function site({ consent = 'accepted', diagnostic = false } = {}) {
         getElementById: id => elements.find(element => element.id === id),
         addEventListener: (name, handler) => { handlers[name] = handler; },
         createElement: tagName => ({
-            tagName, setAttribute() {}, remove() {},
+            tagName, style: {}, setAttribute() {}, remove() {},
             addEventListener(name, handler) { this[name] = handler; }
         })
     };

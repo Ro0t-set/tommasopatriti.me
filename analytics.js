@@ -361,6 +361,7 @@
             document.title = '[TEST ANALYTICS] ' + document.title;
             const notice = document.createElement('div');
             notice.className = 'cookie-toast';
+            notice.style.cssText = 'top:88px;bottom:auto;max-width:calc(100vw - 48px);pointer-events:none';
             notice.setAttribute('role', 'status');
             notice.textContent = getLang() === 'en'
                 ? 'Analytics test: contact buttons send test events without opening calls or WhatsApp.'
