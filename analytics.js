@@ -19,6 +19,9 @@
     };
 
     let analyticsInitialized = false;
+    // Explicit QA mode: exercise the real contact handler without creating Ads
+    // conversions or opening a phone/messaging app. Never persist this flag.
+    const diagnosticMode = new URL(window.location.href).searchParams.get('analytics_debug') === '1';
 
     function safeLocalStorage() {
         try {
@@ -100,11 +103,15 @@
         });
         updateGoogleConsent(true);
         window.gtag('js', new Date());
-        window.gtag('config', CONFIG.gaMeasurementId, {
+        const gaConfig = {
             anonymize_ip: true,
             allow_ad_personalization_signals: false
-        });
-        window.gtag('config', CONFIG.adsId, { allow_ad_personalization_signals: false });
+        };
+        if (diagnosticMode) gaConfig.debug_mode = true;
+        window.gtag('config', CONFIG.gaMeasurementId, gaConfig);
+        if (!diagnosticMode) {
+            window.gtag('config', CONFIG.adsId, { allow_ad_personalization_signals: false });
+        }
 
         loadScript(gaSrc).catch(() => {});
     }
@@ -113,13 +120,12 @@
         if (!window.gtag) return;
         const state = accepted ? 'granted' : 'denied';
         window.gtag('consent', 'update', {
-            analytics_storage: state, ad_storage: state,
-            ad_user_data: state, ad_personalization: 'denied'
+            analytics_storage: state, ad_storage: diagnosticMode ? 'denied' : state,
+            ad_user_data: diagnosticMode ? 'denied' : state, ad_personalization: 'denied'
         });
     }
 
     function trackContactClick(event) {
-        if (getConsent() !== 'accepted' || !analyticsInitialized || !window.gtag) return;
         const link = event.target.closest && event.target.closest('a[href]');
         if (!link) return;
         const url = new URL(link.href, window.location.href);
@@ -130,6 +136,21 @@
             method = 'whatsapp';
         }
         if (!method) return;
+        if (diagnosticMode) event.preventDefault();
+        if (getConsent() !== 'accepted' || !analyticsInitialized || !window.gtag) return;
+
+        const eventName = diagnosticMode ? 'contact_click_test' : 'contact_click';
+        const contact = { contact_method: method };
+        if (diagnosticMode) contact.is_test = true;
+        window.gtag('event', eventName, {
+            send_to: CONFIG.gaMeasurementId,
+            ...contact,
+            ...(diagnosticMode ? { debug_mode: true } : {})
+        });
+        if (window.posthog && typeof window.posthog.capture === 'function') {
+            window.posthog.capture(eventName, contact);
+        }
+        if (diagnosticMode) return;
 
         const conversion = { send_to: CONFIG.contactConversions[method] };
         // Give the tag time to send before a same-tab phone/app handoff, with a fallback.
@@ -146,9 +167,6 @@
             conversion.event_timeout = 800;
             window.setTimeout(navigate, 800);
         }
-        window.gtag('event', 'contact_click', {
-            send_to: CONFIG.gaMeasurementId, contact_method: method
-        });
         window.gtag('event', 'conversion', conversion);
     }
 
@@ -339,6 +357,16 @@
     function init() {
         bindPreferenceLinks();
         document.addEventListener('click', trackContactClick);
+        if (diagnosticMode) {
+            document.title = '[TEST ANALYTICS] ' + document.title;
+            const notice = document.createElement('div');
+            notice.className = 'cookie-toast';
+            notice.setAttribute('role', 'status');
+            notice.textContent = getLang() === 'en'
+                ? 'Analytics test: contact buttons send test events without opening calls or WhatsApp.'
+                : 'Test Analytics: i pulsanti inviano eventi di prova senza aprire chiamate o WhatsApp.';
+            document.body.appendChild(notice);
+        }
 
         if (getConsent() === 'accepted') {
             initAnalytics();
