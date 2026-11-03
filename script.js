@@ -32,6 +32,9 @@
             const text = el.getAttribute(`data-${lang}`);
             if (text) {
                 el.textContent = text;
+                if (el.hasAttribute('data-href-it') && el.hasAttribute('data-href-en')) {
+                    el.setAttribute('href', el.getAttribute(`data-href-${lang}`));
+                }
             }
         });
         
