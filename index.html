@@ -264,10 +264,10 @@
     <!-- Scene dots -->
     <nav class="scene-dots" aria-label="Indice sezioni">
         <a href="#intro" data-dot="intro" aria-label="Intro"></a>
-        <a href="#freelance-heading" data-dot="freelance-heading" aria-label="Collaborazioni"></a>
         <a href="#services-heading" data-dot="services-heading" aria-label="Servizi"></a>
-        <a href="#project-details-heading" data-dot="project-details-heading" aria-label="Progetti nel dettaglio"></a>
         <a href="#experience-heading" data-dot="experience-heading" aria-label="Esperienza"></a>
+        <a href="#freelance-heading" data-dot="freelance-heading" aria-label="Collaborazioni"></a>
+        <a href="#project-details-heading" data-dot="project-details-heading" aria-label="Progetti nel dettaglio"></a>
         <a href="#education-heading" data-dot="education-heading" aria-label="Formazione"></a>
         <a href="#research-heading" data-dot="research-heading" aria-label="Ricerca / Research"></a>
         <a href="#contact-heading" data-dot="contact-heading" aria-label="Contatti"></a>
@@ -299,23 +299,16 @@
                     <span class="hero-title-line hero-title-accent" data-it="software" data-en="development">software</span>
                     <span class="hero-title-line" data-it="Bologna" data-en="Bologna">Bologna</span>
                 </h1>
-                <p class="tagline" data-it="Software Engineer Freelance - sistemi distribuiti, cloud e AI" data-en="Freelance Software Engineer - distributed systems, cloud and AI">Software Engineer Freelance - sistemi distribuiti, cloud e AI</p>
-                
-
-                
+                <p class="tagline" data-it="Sviluppo backend e API, progetto sistemi distribuiti e semplifico infrastrutture cloud." data-en="I build backends and APIs, design distributed systems, and simplify cloud infrastructure.">Sviluppo backend e API, progetto sistemi distribuiti e semplifico infrastrutture cloud.</p>
                 <div class="hero-links">
-                    <a href="#contact-heading" class="btn btn-primary">
+                    <a href="#services-heading" class="btn btn-primary">
+                        <i data-lucide="arrow-down"></i>
+                        <span data-it="Vedi i servizi" data-en="Explore services">Vedi i servizi</span>
+                    </a>
+                    <a href="#contact-heading" class="btn btn-secondary">
                         <i data-lucide="mail"></i>
                         <span data-it="Contattami" data-en="Contact me">Contattami</span>
                     </a>
-                    <a href="https://github.com/Ro0t-set" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-                        <span>GitHub</span>
-                    </a>
-                    <button class="btn btn-secondary" id="openCvModal">
-                        <i data-lucide="file-text"></i>
-                        <span data-it="Scarica CV" data-en="Download CV">Scarica CV</span>
-                    </button>
                 </div>
 
 
@@ -340,6 +333,131 @@
         </header>
 
         </div>
+
+        <!-- Services Section -->
+        <section class="section reveal" aria-labelledby="services-heading">
+            <h2 id="services-heading" class="section-title" data-it="Servizi" data-en="Services">Servizi</h2>
+
+            <div class="services-grid reveal-stagger">
+                <a href="/microservizi.html" class="service-card" style="text-decoration: none; color: inherit;">
+                    <i data-lucide="boxes" class="service-icon"></i>
+                    <h3 data-it="Architetture Microservizi" data-en="Microservices Architecture">Architetture Microservizi</h3>
+                    <p data-it="Progettazione e sviluppo di architetture distribuite scalabili, resilienti e manutenibili." data-en="Design and development of scalable, resilient, and maintainable distributed architectures.">Progettazione e sviluppo di architetture distribuite scalabili, resilienti e manutenibili.</p>
+                </a>
+
+                <a href="/cloud-devops.html" class="service-card" style="text-decoration: none; color: inherit;">
+                    <i data-lucide="cloud" class="service-icon"></i>
+                    <h3 data-it="Cloud & DevOps" data-en="Cloud & DevOps">Cloud & DevOps</h3>
+                    <p data-it="Implementazione di infrastrutture cloud-native con Docker, Kubernetes e CI/CD pipelines." data-en="Implementation of cloud-native infrastructures with Docker, Kubernetes, and CI/CD pipelines.">Implementazione di infrastrutture cloud-native con Docker, Kubernetes e CI/CD pipelines.</p>
+                </a>
+
+                <a href="/backend-development.html" class="service-card" style="text-decoration: none; color: inherit;">
+                    <i data-lucide="code-2" class="service-icon"></i>
+                    <h3 data-it="Backend Development" data-en="Backend Development">Backend Development</h3>
+                    <p data-it="Sistemi backend ad alte prestazioni in Java, Kotlin, Go e Python con focus su clean code." data-en="High-performance backend systems in Java, Kotlin, Go, and Python with a focus on clean code.">Sistemi backend ad alte prestazioni in Java, Kotlin, Go e Python con focus su clean code.</p>
+                </a>
+
+                <a href="/semplificazione-infrastrutture.html" class="service-card" style="text-decoration: none; color: inherit;">
+                    <i data-lucide="shrink" class="service-icon"></i>
+                    <h3 data-it="Semplificazione Infrastrutture" data-en="Infrastructure Simplification">Semplificazione Infrastrutture</h3>
+                    <p data-it="Migrazione da infrastrutture complesse e costose verso soluzioni più semplici, efficienti e manutenibili." data-en="Migration from complex and expensive infrastructures to simpler, more efficient and maintainable solutions.">Migrazione da infrastrutture complesse e costose verso soluzioni più semplici, efficienti e manutenibili.</p>
+                </a>
+            </div>
+        </section>
+
+
+        <!-- All Services Section -->
+        <section class="section reveal" aria-labelledby="all-services-heading">
+            <h2 id="all-services-heading" class="section-title" data-it="Tutti i servizi" data-en="All services">Tutti i servizi</h2>
+
+            <div class="service-directory">
+            <div class="service-category">
+                <h3 class="service-category-title" data-it="Frontend Development" data-en="Frontend Development">Frontend Development</h3>
+                <div class="tech-tags">
+                    <a href="/react-development.html" style="text-decoration: none;"><span>React</span></a>
+                    <a href="/angular-development.html" style="text-decoration: none;"><span>Angular</span></a>
+                    <a href="/vue-development.html" style="text-decoration: none;"><span>Vue.js</span></a>
+                    <a href="/typescript-development.html" style="text-decoration: none;"><span>TypeScript</span></a>
+                </div>
+            </div>
+
+            <div class="service-category">
+                <h3 class="service-category-title" data-it="Backend & Linguaggi" data-en="Backend & Languages">Backend & Linguaggi</h3>
+                <div class="tech-tags">
+                    <a href="/backend-development.html" style="text-decoration: none;"><span data-it="Backend su misura" data-en="Custom Backend">Backend su misura</span></a>
+                    <a href="/java-development.html" style="text-decoration: none;"><span>Java / Spring Boot</span></a>
+                    <a href="/nodejs-development.html" style="text-decoration: none;"><span>Node.js / NestJS</span></a>
+                    <a href="/python-development.html" style="text-decoration: none;"><span>Python / FastAPI</span></a>
+                    <a href="/scala-development.html" style="text-decoration: none;"><span>Scala / Akka</span></a>
+                </div>
+            </div>
+
+            <div class="service-category">
+                <h3 class="service-category-title" data-it="Cloud & Infrastructure" data-en="Cloud & Infrastructure">Cloud & Infrastructure</h3>
+                <div class="tech-tags">
+                    <a href="/cloud-devops.html" style="text-decoration: none;"><span>Cloud & DevOps</span></a>
+                    <a href="/digitalocean-cloud.html" style="text-decoration: none;"><span>DigitalOcean</span></a>
+                    <a href="/semplificazione-infrastrutture.html" style="text-decoration: none;"><span data-it="Semplificazione Infrastrutture" data-en="Infrastructure Simplification">Semplificazione Infrastrutture</span></a>
+                </div>
+            </div>
+
+            <div class="service-category">
+                <h3 class="service-category-title" data-it="API, Sistemi & IoT" data-en="API, Systems & IoT">API, Sistemi & IoT</h3>
+                <div class="tech-tags">
+                    <a href="/api-rest-development.html" style="text-decoration: none;"><span>API REST</span></a>
+                    <a href="/microservizi.html" style="text-decoration: none;"><span data-it="Microservizi" data-en="Microservices">Microservizi</span></a>
+                    <a href="/iot-embedded.html" style="text-decoration: none;"><span data-it="IoT & Embedded" data-en="IoT & Embedded">IoT & Embedded</span></a>
+                </div>
+            </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section class="section reveal" aria-labelledby="experience-heading">
+            <h2 id="experience-heading" class="section-title" data-it="Esperienza" data-en="Experience">Esperienza</h2>
+
+            <div class="timeline reveal-stagger">
+                <article class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2024 — <span data-it="Presente" data-en="Present">Presente</span></span>
+                        <h3 data-it="Software Engineer Freelance" data-en="Freelance Software Engineer">Software Engineer Freelance</h3>
+                        <p class="timeline-company">Bologna, Italia</p>
+                        <p class="timeline-desc" data-it="Progettazione e sviluppo di architetture microservizi, sistemi distribuiti e soluzioni cloud-native." data-en="Design and development of microservices architectures, distributed systems and cloud-native solutions.">Progettazione e sviluppo di architetture microservizi, sistemi distribuiti e soluzioni cloud-native.</p>
+                    </div>
+                </article>
+
+                <article class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2024</span>
+                        <h3 data-it="Cloud Engineer — Tirocinio" data-en="Cloud Engineer — Internship">Cloud Engineer — Tirocinio</h3>
+                        <p class="timeline-company">
+                            <img class="timeline-logo" src="assets/logos/dallara.svg" alt="" loading="lazy" width="20" height="20">
+                            Dallara Automobili
+                        </p>
+                        <p class="timeline-desc" data-it="Sistema Simulation as a Service con architettura microservizi. Autoscaling con KEDA, Prometheus e Kubernetes. Backend in Golang." data-en="Simulation as a Service system with microservices architecture. Autoscaling with KEDA, Prometheus and Kubernetes. Backend in Golang.">Sistema Simulation as a Service con architettura microservizi. Autoscaling con KEDA, Prometheus e Kubernetes. Backend in Golang.</p>
+                    </div>
+                </article>
+
+                <article class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2023 — 2024</span>
+                        <h3 data-it="Tutor Universitario" data-en="University Tutor">Tutor Universitario</h3>
+                        <p class="timeline-company">
+                            <img class="timeline-logo" src="assets/logos/unibo.png" alt="" loading="lazy" width="20" height="20">
+                            Università di Bologna
+                        </p>
+                        <p class="timeline-desc" data-it="Supporto alla didattica per studenti con DSA." data-en="Teaching support for students with learning disabilities.">Supporto alla didattica per studenti con DSA.</p>
+                    </div>
+                </article>
+            </div>
+            <button class="btn btn-secondary" id="openCvModal">
+                <i data-lucide="file-text"></i>
+                <span data-it="Scarica CV" data-en="Download CV">Scarica CV</span>
+            </button>
+        </section>
 
         <!-- Freelance Projects and Collaborations Overview -->
         <section class="section project-showcase reveal" aria-labelledby="freelance-heading" data-project-carousel>
@@ -396,38 +514,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Services Section -->
-        <section class="section reveal" aria-labelledby="services-heading">
-            <h2 id="services-heading" class="section-title" data-it="Servizi" data-en="Services">Servizi</h2>
-
-            <div class="services-grid reveal-stagger">
-                <a href="/microservizi.html" class="service-card" style="text-decoration: none; color: inherit;">
-                    <i data-lucide="boxes" class="service-icon"></i>
-                    <h3 data-it="Architetture Microservizi" data-en="Microservices Architecture">Architetture Microservizi</h3>
-                    <p data-it="Progettazione e sviluppo di architetture distribuite scalabili, resilienti e manutenibili." data-en="Design and development of scalable, resilient, and maintainable distributed architectures.">Progettazione e sviluppo di architetture distribuite scalabili, resilienti e manutenibili.</p>
-                </a>
-
-                <a href="/cloud-devops.html" class="service-card" style="text-decoration: none; color: inherit;">
-                    <i data-lucide="cloud" class="service-icon"></i>
-                    <h3 data-it="Cloud & DevOps" data-en="Cloud & DevOps">Cloud & DevOps</h3>
-                    <p data-it="Implementazione di infrastrutture cloud-native con Docker, Kubernetes e CI/CD pipelines." data-en="Implementation of cloud-native infrastructures with Docker, Kubernetes, and CI/CD pipelines.">Implementazione di infrastrutture cloud-native con Docker, Kubernetes e CI/CD pipelines.</p>
-                </a>
-
-                <a href="/backend-development.html" class="service-card" style="text-decoration: none; color: inherit;">
-                    <i data-lucide="code-2" class="service-icon"></i>
-                    <h3 data-it="Backend Development" data-en="Backend Development">Backend Development</h3>
-                    <p data-it="Sistemi backend ad alte prestazioni in Java, Kotlin, Go e Python con focus su clean code." data-en="High-performance backend systems in Java, Kotlin, Go, and Python with a focus on clean code.">Sistemi backend ad alte prestazioni in Java, Kotlin, Go e Python con focus su clean code.</p>
-                </a>
-
-                <a href="/semplificazione-infrastrutture.html" class="service-card" style="text-decoration: none; color: inherit;">
-                    <i data-lucide="shrink" class="service-icon"></i>
-                    <h3 data-it="Semplificazione Infrastrutture" data-en="Infrastructure Simplification">Semplificazione Infrastrutture</h3>
-                    <p data-it="Migrazione da infrastrutture complesse e costose verso soluzioni più semplici, efficienti e manutenibili." data-en="Migration from complex and expensive infrastructures to simpler, more efficient and maintainable solutions.">Migrazione da infrastrutture complesse e costose verso soluzioni più semplici, efficienti e manutenibili.</p>
-                </a>
-            </div>
-        </section>
-
 
         <!-- Individual Project Details -->
         <section class="section reveal" aria-labelledby="project-details-heading">
@@ -685,49 +771,6 @@
             </div>
         </section>
 
-        <!-- Experience Section -->
-        <section class="section reveal" aria-labelledby="experience-heading">
-            <h2 id="experience-heading" class="section-title" data-it="Esperienza" data-en="Experience">Esperienza</h2>
-
-            <div class="timeline reveal-stagger">
-                <article class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">2024 — <span data-it="Presente" data-en="Present">Presente</span></span>
-                        <h3 data-it="Software Engineer Freelance" data-en="Freelance Software Engineer">Software Engineer Freelance</h3>
-                        <p class="timeline-company">Bologna, Italia</p>
-                        <p class="timeline-desc" data-it="Progettazione e sviluppo di architetture microservizi, sistemi distribuiti e soluzioni cloud-native." data-en="Design and development of microservices architectures, distributed systems and cloud-native solutions.">Progettazione e sviluppo di architetture microservizi, sistemi distribuiti e soluzioni cloud-native.</p>
-                    </div>
-                </article>
-
-                <article class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">2024</span>
-                        <h3 data-it="Cloud Engineer — Tirocinio" data-en="Cloud Engineer — Internship">Cloud Engineer — Tirocinio</h3>
-                        <p class="timeline-company">
-                            <img class="timeline-logo" src="assets/logos/dallara.svg" alt="" loading="lazy" width="20" height="20">
-                            Dallara Automobili
-                        </p>
-                        <p class="timeline-desc" data-it="Sistema Simulation as a Service con architettura microservizi. Autoscaling con KEDA, Prometheus e Kubernetes. Backend in Golang." data-en="Simulation as a Service system with microservices architecture. Autoscaling with KEDA, Prometheus and Kubernetes. Backend in Golang.">Sistema Simulation as a Service con architettura microservizi. Autoscaling con KEDA, Prometheus e Kubernetes. Backend in Golang.</p>
-                    </div>
-                </article>
-
-                <article class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <span class="timeline-date">2023 — 2024</span>
-                        <h3 data-it="Tutor Universitario" data-en="University Tutor">Tutor Universitario</h3>
-                        <p class="timeline-company">
-                            <img class="timeline-logo" src="assets/logos/unibo.png" alt="" loading="lazy" width="20" height="20">
-                            Università di Bologna
-                        </p>
-                        <p class="timeline-desc" data-it="Supporto alla didattica per studenti con DSA." data-en="Teaching support for students with learning disabilities.">Supporto alla didattica per studenti con DSA.</p>
-                    </div>
-                </article>
-            </div>
-        </section>
-        
         <!-- Education Section -->
         <section class="section reveal" aria-labelledby="education-heading">
             <h2 id="education-heading" class="section-title" data-it="Formazione" data-en="Education">Formazione</h2>
@@ -795,52 +838,6 @@
                         <p class="timeline-desc"><a href="/research/f1tenth-weight-space/it/" data-href-it="/research/f1tenth-weight-space/it/" data-href-en="/research/f1tenth-weight-space/en/" data-it="Leggi lo studio e guarda i grafici" data-en="Read the study and explore the figures">Leggi lo studio e guarda i grafici</a></p>
                     </div>
                 </article>
-            </div>
-        </section>
-
-        <!-- All Services Section -->
-        <section class="section reveal" aria-labelledby="all-services-heading">
-            <h2 id="all-services-heading" class="section-title" data-it="Tutti i servizi" data-en="All services">Tutti i servizi</h2>
-
-            <div class="service-directory">
-            <div class="service-category">
-                <h3 class="service-category-title" data-it="Frontend Development" data-en="Frontend Development">Frontend Development</h3>
-                <div class="tech-tags">
-                    <a href="/react-development.html" style="text-decoration: none;"><span>React</span></a>
-                    <a href="/angular-development.html" style="text-decoration: none;"><span>Angular</span></a>
-                    <a href="/vue-development.html" style="text-decoration: none;"><span>Vue.js</span></a>
-                    <a href="/typescript-development.html" style="text-decoration: none;"><span>TypeScript</span></a>
-                </div>
-            </div>
-
-            <div class="service-category">
-                <h3 class="service-category-title" data-it="Backend & Linguaggi" data-en="Backend & Languages">Backend & Linguaggi</h3>
-                <div class="tech-tags">
-                    <a href="/backend-development.html" style="text-decoration: none;"><span data-it="Backend su misura" data-en="Custom Backend">Backend su misura</span></a>
-                    <a href="/java-development.html" style="text-decoration: none;"><span>Java / Spring Boot</span></a>
-                    <a href="/nodejs-development.html" style="text-decoration: none;"><span>Node.js / NestJS</span></a>
-                    <a href="/python-development.html" style="text-decoration: none;"><span>Python / FastAPI</span></a>
-                    <a href="/scala-development.html" style="text-decoration: none;"><span>Scala / Akka</span></a>
-                </div>
-            </div>
-
-            <div class="service-category">
-                <h3 class="service-category-title" data-it="Cloud & Infrastructure" data-en="Cloud & Infrastructure">Cloud & Infrastructure</h3>
-                <div class="tech-tags">
-                    <a href="/cloud-devops.html" style="text-decoration: none;"><span>Cloud & DevOps</span></a>
-                    <a href="/digitalocean-cloud.html" style="text-decoration: none;"><span>DigitalOcean</span></a>
-                    <a href="/semplificazione-infrastrutture.html" style="text-decoration: none;"><span data-it="Semplificazione Infrastrutture" data-en="Infrastructure Simplification">Semplificazione Infrastrutture</span></a>
-                </div>
-            </div>
-
-            <div class="service-category">
-                <h3 class="service-category-title" data-it="API, Sistemi & IoT" data-en="API, Systems & IoT">API, Sistemi & IoT</h3>
-                <div class="tech-tags">
-                    <a href="/api-rest-development.html" style="text-decoration: none;"><span>API REST</span></a>
-                    <a href="/microservizi.html" style="text-decoration: none;"><span data-it="Microservizi" data-en="Microservices">Microservizi</span></a>
-                    <a href="/iot-embedded.html" style="text-decoration: none;"><span data-it="IoT & Embedded" data-en="IoT & Embedded">IoT & Embedded</span></a>
-                </div>
-            </div>
             </div>
         </section>
 
