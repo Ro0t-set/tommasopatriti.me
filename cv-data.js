@@ -22,8 +22,8 @@ const CV_DATA = {
             label: { it: "Chi sono", en: "About me" },
             type: "text",
             content: {
-                it: "Sono un ingegnere informatico e costruisco prodotti software production-grade tra backend, cloud, mobile e AI. Mi occupo di microservizi, API, data pipeline, autenticazione, osservabilità e automazioni, con un gusto preciso per architetture semplici quando il dominio è complesso.",
-                en: "I am a computer engineer building production-grade software products across backend, cloud, mobile and AI. I work on microservices, APIs, data pipelines, authentication, observability and automation, with a strong preference for simple architectures around complex domains."
+                it: "Sono un ingegnere informatico iscritto all’Albo dell’Ordine degli Ingegneri della Provincia di Bologna. Costruisco prodotti software production-grade tra backend, cloud, mobile e AI. Mi occupo di microservizi, API, data pipeline, autenticazione, osservabilità e automazioni, con un gusto preciso per architetture semplici quando il dominio è complesso.",
+                en: "I am a computer engineer registered with the Order of Engineers of the Province of Bologna. I build production-grade software products across backend, cloud, mobile and AI. I work on microservices, APIs, data pipelines, authentication, observability and automation, with a strong preference for simple architectures around complex domains."
             }
         },
         {
