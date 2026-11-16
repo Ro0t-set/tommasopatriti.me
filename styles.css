@@ -2000,3 +2000,85 @@ body:not(.home) .section-title { font-size: clamp(1.9rem, 3vw, 2.8rem); }
 .hero.has-interference .hero-content { background: none; }
 .hero.has-interference .poster-monogram::after { display: none; }
 .hero.has-interference::after { z-index: 3; }
+
+/* Software appraisal */
+.service-card--wide { grid-column: 1 / -1; }
+.poster-layout .service-card--wide p { max-width: 74ch; }
+
+.appraisal-skip {
+    position: fixed;
+    z-index: 1200;
+    top: 1rem;
+    left: 1rem;
+    padding: .75rem 1rem;
+    background: var(--bg-card);
+    color: var(--text-primary);
+}
+.appraisal-skip:not(:focus) { clip-path: inset(50%); }
+.appraisal-page .nav-left a { text-decoration: none; }
+
+.appraisal-hero {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    align-items: center;
+    gap: clamp(1.5rem, 5vw, 5rem);
+    text-align: left;
+}
+.appraisal-hero .name { max-width: 14ch; }
+.appraisal-register {
+    align-self: flex-start;
+    color: var(--text-primary);
+    text-underline-offset: .18em;
+}
+.appraisal-scope,
+.appraisal-contact {
+    padding: clamp(1.25rem, 4vw, 3rem);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+}
+.appraisal-scope { border-top: 4px solid var(--accent); }
+.appraisal-scope h2 {
+    font: 750 1.75rem/1.15 var(--font-display);
+    margin-bottom: .75rem;
+}
+.appraisal-scope dl > div {
+    border-top: 1px solid var(--border);
+    padding-block: .75rem;
+}
+.appraisal-scope dl > div:last-child { padding-bottom: 0; }
+.appraisal-scope dt { font-weight: 650; }
+.appraisal-scope dd { margin-block-start: .25rem; }
+.appraisal-scope dd,
+.appraisal-options p { color: var(--text-secondary); font-size: .95rem; line-height: 1.6; }
+.appraisal-options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.appraisal-options h3 { font-size: 1.35rem; }
+.appraisal-documents { padding-inline-start: 1.25rem; }
+.appraisal-documents li + li { margin-block-start: .5rem; }
+.appraisal-page .section { margin-block-end: clamp(3rem, 7vw, 6rem); }
+.appraisal-page .appraisal-contact { margin-block-end: 0; }
+.appraisal-page .hero-links .btn { min-width: 0; white-space: normal; text-align: center; }
+.appraisal-page .btn-primary {
+    background: var(--text-primary);
+    border-color: var(--text-primary);
+    color: var(--bg-primary);
+}
+.appraisal-page .btn-primary:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+.appraisal-contact .hero-links { margin-top: 1.25rem; }
+.appraisal-page .faq-question:focus-visible { outline-offset: -5px; }
+.appraisal-page .faq-answer a,
+.appraisal-page .footer-main p,
+.appraisal-page .footer-links a { color: var(--text-secondary); }
+.appraisal-page .footer-links a { text-decoration: underline; text-underline-offset: .18em; }
+
+@media (max-width: 860px) {
+    .appraisal-hero,
+    .appraisal-options { grid-template-columns: 1fr; }
+    .appraisal-hero .hero-content { align-items: flex-start; }
+    .appraisal-page .hero-links { justify-content: flex-start; }
+}
+
+@media (max-width: 480px) {
+    .appraisal-contact .hero-links .btn { flex-basis: 100%; }
+}

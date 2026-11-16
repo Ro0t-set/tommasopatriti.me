@@ -33,6 +33,7 @@
 - [Cloud & DevOps](https://tommasopatriti.me/cloud-devops.html) — Infrastrutture cloud-native, CI/CD, Docker, Kubernetes, monitoring (Prometheus, Grafana, KEDA)
 - [Backend Development](https://tommasopatriti.me/backend-development.html) — Sistemi backend in Java, Kotlin, Go, Python con focus su clean code e clean architecture
 - [Semplificazione Infrastrutture](https://tommasopatriti.me/semplificazione-infrastrutture.html) — Migrazione da infrastrutture over-engineered a soluzioni più semplici, efficienti, manutenibili
+- [Perizie di congruità software a Bologna](https://tommasopatriti.me/perizia-congruita-software-bologna.html) — Verifica di preventivi, giornate, tariffe e costi per software su misura. Relazioni firmate e perizie giurate secondo i requisiti dell’incarico.
 - [API REST](https://tommasopatriti.me/api-rest-development.html) — Progettazione e sviluppo di API REST robuste e documentate
 - [DigitalOcean Cloud](https://tommasopatriti.me/digitalocean-cloud.html) — Deploy e gestione di infrastrutture su DigitalOcean
 - [Sviluppo IoT & Embedded](https://tommasopatriti.me/iot-embedded.html) — Soluzioni IoT con Raspberry Pi, ESP32, LoRa, Bluetooth
